@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FUT Champions Web App Ultimate Team - Gagnez des matchs, gérez votre équipe, et dominez vos adversaires !">
+    <!-- <link rel="stylesheet" href="../style/index.css"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>FUT Champions Web App Ultimate Team - Gérer Votre Équipe Ultime</title>
+    <link rel="icon" href="./assets/logo.png" type="image/x-icon">
+
+</head>
+<body>
+
+<nav class="bg-gray-100 border-gray-200 px-4  shadow-sm">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between md:justify-around  mx-auto p-4">
+        
+            <a href="./index.html" class="flex flex-col items-center  rtl:space-x-reverse">
+                <img src="./assets/logoo.png" class="h-12 " alt=" Logo" />
+                <span class=" text-xs font-medium  md:text-xl ">FUT Champions</span>
+            </a>
+        
+    <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+        <button type="button" class="text-white bg-red-600 hover:bg-[#2E1F27] e outline-none  font-medium  text-sm px-6 py-2 text-center ">Join</button>
+        <button data-collapse-toggle="navbar-cta" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 " aria-controls="navbar-cta" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+          </svg>
+      </button>
+    </div>
+    
+    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-cta">
+      <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  ">
+        <li>
+          <a href="#" class="block py-2 px-3 md:p-0 text-white bg-red-600 rounded md:bg-transparent md:text-red-600 " aria-current="page">Home </a>
+        </li>
+        <li>
+          <a href="#" class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-600 ">About Us</a>
+        </li>
+        <li>
+          <select href="#" class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-600 ">
+            <option value="option1"  selected disabled >Features</option>
+            <option value="option1">Option 1</option>
+            <option value="option1">Option 1</option>
+          </select>
+        </li>
+        
+      </ul>
+      
+    </div>
+    </div>
+  </nav>
+  <article class="flex items-center justify-between  my-20 mx-20 ">
+    <section style="background: url(./assets/terrain.png) no-repeat center  / cover;filter: drop-shadow(0px 10px 10px red);"class="  w-[50%] h-[70vh]  rounded-lg overflow-hidden  ">
+    <div class="grid grid-rows-4 gap-5 w-[100%] h-[100%] my-1">
+
+            <div class="flex justify-center gap-10">
+                <div class="bg-[url('./assets/placeholder-card-normal.webp')] bg-cover bg-center w-20 text-white h-30 flex items-center justify-center rounded-lg filter hover:shadow-lg hover:shadow-red-500   ">A1</div>
+                <div class="bg-[url('./assets/placeholder-card-normal.webp')] bg-cover bg-center w-20 text-white h-30 flex items-center justify-center rounded-lg filter hover:shadow-lg hover:shadow-red-500 ">A2</div>
+            </div>
+            <div class="flex justify-center gap-10">
+                <div class="bg-[url('./assets/placeholder-card-normal.webp')] bg-cover bg-center w-20 text-white h-30 flex items-center justify-center rounded-lg filter hover:shadow-lg hover:shadow-red-500">M1</div>
+                <div class="bg-[url('./assets/placeholder-card-normal.webp')] bg-cover bg-center w-20 text-white h-30 flex items-center justify-center rounded-lg filter hover:shadow-lg hover:shadow-red-500">M2</div>
+                <div class="bg-[url('./assets/placeholder-card-normal.webp')] bg-cover bg-center w-20 text-white h-30 flex items-center justify-center rounded-lg filter hover:shadow-lg hover:shadow-red-500">M3</div>
+                <div class="bg-[url('./assets/placeholder-card-normal.webp')] bg-cover bg-center w-20 text-white h-30 flex items-center justify-center rounded-lg filter hover:shadow-lg hover:shadow-red-500">M4</div>
+            </div>
+            <div class="flex justify-center gap-20">
+                <div class="bg-[url('./assets/placeholder-card-normal.webp')] bg-cover bg-center w-20 text-white h-30 flex items-center justify-center rounded-lg filter hover:shadow-lg hover:shadow-red-500">D1</div>
+                <div class="bg-[url('./assets/placeholder-card-normal.webp')] bg-cover bg-center w-20 text-white h-30 flex items-center justify-center rounded-lg filter hover:shadow-lg hover:shadow-red-500">D2</div>
+                <div class="bg-[url('./assets/placeholder-card-normal.webp')] bg-cover bg-center w-20 text-white h-30 flex items-center justify-center rounded-lg filter hover:shadow-lg hover:shadow-red-500">D3</div>
+                <div class="bg-[url('./assets/placeholder-card-normal.webp')] bg-cover bg-center w-20 text-white h-30 flex items-center justify-center rounded-lg filter hover:shadow-lg hover:shadow-red-500">D4</div>
+            </div>
+            <div class="flex justify-center">
+                <div class="bg-[url('./assets/placeholder-card-normal.webp')] bg-cover bg-center w-20 text-white h-30 flex items-center justify-center rounded-lg filter hover:shadow-lg hover:shadow-red-500">G</div>
+            </div>
+        </div>
+    </section>
+    <div class="flex items-start">
+        <div class="bg-[url('./assets/placeholder-card-normal.webp')] bg-cover bg-center w-20 text-white h-40 flex items-center justify-center rounded-lg filter hover:shadow-lg hover:shadow-red-500">D1</div>
+    </div>
+
+    <section class="w-80 h-[70vh] border-2 border-red-200 rounded-lg  ">
+        <div class="flex justify-center w-full ">
+            <h1 class="text-3xl text-black text-center font-bold">Hello World</h1>
+            <p>2024</p>
+        </div><br><hr>
+        <div class="flex justify-around items-center mt-1  ">
+            <img src="./assets/bg.webp" alt="" width="50" height="50" class="rounded-full">
+            <h2>charaf eddine </h2>
+            <p>GK</p>
+        </div><br><hr>
+        <div class="flex justify-around items-center mt-">
+            <img src="./assets/bg.webp" alt="" width="50" height="50" class="rounded-full">
+            <h2>charaf eddine </h2>
+            <p>GK</p>
+        </div><br><hr>
+         <div class="flex justify-around items-center mt-  ">
+            <img src="./assets/bg.webp" alt="" width="50" height="50" class="rounded-full">
+            <h2>charaf eddine </h2>
+            <p>GK</p>
+        </div><br><hr>
+       
+
+    </section>
+
+  </article>
+  
+
+
+
+
+
+
+
+
+
+
+  <footer class="bg-white  w-full rounded-lg shadow  ">
+    <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8 ">
+        <div class="sm:flex sm:items-center sm:justify-around">
+            <a href="./index.html" class="flex flex-col  items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
+                <img src="./assets/logoo.png" class="h-12" alt=" Logo" />
+                <span class="text-xs font-medium  md:text-xl">FUT Champions</span>
+            </a>
+            <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 ">
+                <li>
+                    <a href="#" class="hover:underline me-4 md:me-6">Home</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline me-4 md:me-6">About us </a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline me-4 md:me-6">Features</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline">Privacy Policy</a>
+                </li>
+            </ul>
+          
+        </div>
+        <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8" />
+        <span class="block text-sm text-gray-500 sm:text-center">© 2024 <a href="./index.html" class="hover:underline">FUT Champions™</a>. All Rights Reserved.</span>
+    </div>
+</footer>
+
+
+<script src="./index.js"></script>
+</body>
+</html>
