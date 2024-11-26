@@ -65,8 +65,10 @@
                 <div class="grid grid-rows-4 gap-5 w-full h-full my-1">
         
                     <div class="flex justify-center md:gap-20">
-                        <div id="card" class="relative w-[11%] h-30 flex items-center  flex-col justify-center rounded-lg cursor-pointer text-white  transition-transform duration-300 hover:brightness-110 hover:scale-105" style="filter: drop-shadow(0px 0px 3px red);">
-                            <div class="absolute inset-0 bg-[url('./assets/placeholder-card-normal.webp')] bg-cover bg-center rounded-lg  " aria-hidden="true"></div>
+                        <div id="card" class="relative w-[11%] h-40 flex items-center  flex-col justify-center rounded-lg cursor-pointer text-white  transition-transform duration-300 hover:brightness-110 hover:scale-105" style="filter: drop-shadow(0px 0px 3px red);">
+                            <div class="absolute inset-0 bg-[url('./assets/placeholder-card-normal.webp')] bg-cover bg-center rounded-lg flex justify-center items-end  " aria-hidden="true">
+                                <!-- <div class="h-6 w-12 bg-red-500 rounded-full text-center">ST</div> -->
+                            </div>
                             <span class="relative z-10 text-center font-semibold">Advenced Forward </span>
                             <span class="relative z-10">Attack </span>
                             <div  class="relative z-10">
@@ -227,11 +229,11 @@
 
 <!------------------------------------------------------------------------Code Form -------------------------------------------------->
 
-<div id="form" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full  h-[calc(100%-1rem)] max-h-120">
+<div id="form" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full  bg-transparent  h-[calc(100%-1rem)] max-h-120">
     <div class="relative p-2 w-full max-w-md max-h-full">
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div class="relative bg-gray-700 rounded-lg shadow dark:bg-gray-700">
             <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                <h3 class="text-lg font-semibold text-gray-900 ">
+                <h3 class="text-lg font-semibold text-gray-400 ">
                     Open positions
                 </h3>
                 <button id="close" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="select-modal">
@@ -245,16 +247,16 @@
                 <!-- <p class="text-gray-500 dark:text-gray-400 mb-4">Select your desired position:</p> -->
                 <form class="max-w-sm mx-auto overflow-y-auto overflow-x-hidden">
                     <div class="mb-5">
-                      <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Name</label>
-                      <input type="text" id="name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="" required />
+                      <label for="name" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white"> Name</label>
+                      <input type="text" id="name" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="" required />
                     </div>
                     <div class="mb-5">
-                      <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Image</label>
-                      <input type="file" id="image" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                      <label for="image" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white"> Image</label>
+                      <input type="file" id="image" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
                     </div>
                     <div class="mb-5">
-                      <label for="Position" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Position</label>
-                      <select name="Position" id="Position" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                      <label for="Position" class="block mb-2 text-sm font-medium text-gray-300 ">Position</label>
+                      <select name="Position" id="Position" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                         <option value="RW">RW</option>
                         <option value="ST">ST</option>
                         <option value="CM">CM</option>
@@ -269,68 +271,76 @@
                     </div>
 
                     <div class="mb-5">
-                        <label for="nationality" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nationality</label>
-                        <input type="text" id="nationality" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
+                        <label for="nationality" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">Nationality</label>
+                        <input type="text" id="nationality" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
                     </div>
 
                     <div class="mb-5">
-                        <label for="flag" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Flag</label>
-                        <input type="file" id="flag" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
+                        <label for="flag" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white"> Flag</label>
+                        <input type="file" id="flag" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
                     </div>
 
                     <div class="mb-5">
-                        <label for="Club" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Club</label>
-                        <input type="text" id="Club" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
+                        <label for="Club" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">Club</label>
+                        <input type="text" id="Club" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
                     </div>
 
                     <div class="mb-5">
-                        <label for="Logo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Logo</label>
-                        <input type="file" id="Logo" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
+                        <label for="Logo" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white"> Logo</label>
+                        <input type="file" id="Logo" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
                     </div>
                         
                     <div class="flex gap-2">
                        <div class="mb-5">
-                            <label for="rating" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">rating</label>
-                            <input type="text" id="rating" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
+                            <label for="rating" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">rating</label>
+                            <input type="text" id="rating" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
                         </div>
                         <div class="mb-5">
-                            <label for="pace" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">pace</label>
-                            <input type="text" id="pace" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
+                            <label for="pace" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">pace</label>
+                            <input type="text" id="pace" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
                         </div>
                         <div class="mb-5">
-                            <label for="shooting" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">shooting</label>
-                            <input type="text" id="shooting" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
+                            <label for="shooting" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">shooting</label>
+                            <input type="text" id="shooting" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
                         </div>
                         <div class="mb-5">
-                            <label for="passing" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">passing</label>
-                            <input type="text" id="passing" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
+                            <label for="passing" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">passing</label>
+                            <input type="text" id="passing" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
                         </div>
                         <div class="mb-5">
-                            <label for="dribbling" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">dribbling</label>
-                            <input type="text" id="dribbling" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
+                            <label for="dribbling" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">dribbling</label>
+                            <input type="text" id="dribbling" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
                         </div>
                         <div class="mb-5">
-                            <label for="defending" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">defending</label>
-                            <input type="text" id="defending" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
+                            <label for="defending" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">defending</label>
+                            <input type="text" id="defending" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
                         </div>
                         <div class="mb-5">
-                            <label for="physical" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">physical</label>
-                            <input type="text" id="physical" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
+                            <label for="physical" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">physical</label>
+                            <input type="text" id="physical" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
                         </div>
 
                     </div>
-
-                    
-                    
-                    <div class="flex items-start mb-5">
+                    <!-- <div class="flex items-start mb-5">
                       <div class="flex items-center h-5">
-                        <input id="terms" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-red-300 " required />
+                        <input id="terms" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-600 focus:ring-3 focus:ring-red-300 " required />
                       </div>
-                      <label for="terms" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="#" class="text-red-600 hover:underline ">terms and conditions</a></label>
-                    </div>
+                      <label for="terms" class="ms-2 text-sm font-medium text-gray-300 dark:text-gray-300">I agree with the <a href="#" class="text-red-600 hover:underline ">terms and conditions</a></label>
+                    </div> -->
                   </form>
-                  
-                <!-- <ul class="space-y-4 mb-4">
+                <button id="add_new" class="text-white inline-flex w-full justify-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+                    New contract
+                </button>
+            </div>
+        </div>
+    </div>
+</div> 
+
+
+
+
+
+ <!-- <ul class="space-y-4 mb-4">
                     <li>
                         <input type="radio" id="job-1" name="job" value="job-1" class="hidden peer" required />
                         <label for="job-1" class="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-red-600 peer-checked:text-red-600 hover:text-gray-900 hover:bg-gray-100  ">                           
@@ -362,19 +372,6 @@
                         </label>
                     </li>
                 </ul> -->
-                <button class="text-white inline-flex w-full justify-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
-                    Next step
-                </button>
-            </div>
-        </div>
-    </div>
-</div> 
-
-
-
-
-
-
 
   <footer class="bg-white  w-full rounded-lg shadow mt-40 ">
     <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8 ">
