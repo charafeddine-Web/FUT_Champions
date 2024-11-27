@@ -1,11 +1,10 @@
-let card=document.getElementById('card');
+let show_form=document.getElementById('show_form');
 let form=document.getElementById('form');
 
-let close=document.getElementById('close').addEventListener('click',()=>{
+document.querySelector('#close').addEventListener('click',()=>{
     form.style.display="none"
-
 })
-card.addEventListener('click',function(){
+show_form.addEventListener('click',function(){
     form.style.display="flex"
 })
 
@@ -14,8 +13,18 @@ card.addEventListener('click',function(){
 
 let players=JSON.parse(localStorage.getItem("players") || "[]");
 show_players();
+show_players_show_spec()
 
+// ajouter une player  dans localstorage
 document.getElementById('add_new').addEventListener('click',function(){
+
+    if (players.length >= 24) {
+        alert("Erreur : Vous ne pouvez pas ajouter plus de 24 joueurs.");
+        return; 
+    }
+
+    
+
     let nom = document.getElementById('name').value.toLowerCase().trim();
     let image = document.getElementById('image').value.toLowerCase().trim();
     let Position = document.getElementById('Position').value.trim();
@@ -30,8 +39,15 @@ document.getElementById('add_new').addEventListener('click',function(){
     let dribbling = document.getElementById('dribbling').value.toLowerCase().trim();
     let defending = document.getElementById('defending').value.toLowerCase().trim();
     let physical = document.getElementById('physical').value.toLowerCase().trim();
+    let role = document.getElementById('role').value.toLowerCase().trim();
+
+    if(rating >= 100 || rating <= 0 ){
+        rating=100;
+    }
+
     let player={
         name:nom,
+        role:role,
         image:image,
         Position:Position,
         nationality:nationality,
@@ -52,10 +68,12 @@ document.getElementById('add_new').addEventListener('click',function(){
     console.log(players)
 })
 
-/****************************************************************************************************** */
-
+/*******************************************************************************************************/
+/**
+     * show players 
+*/
 function show_players() {
-    const parent = document.getElementById('show');
+    const parent = document.querySelector('.show');
     parent.innerHTML = "";
 
     players.forEach((player) => {
@@ -91,10 +109,62 @@ function show_players() {
     
 </div>
 
-
-
-          
         `;
     });
 }
+/**
+ * function pour afficher les joueurs spec
+ */
+function show_players_show_spec() {
+    const show_spec = document.querySelector('#show_spec');
+    show_spec.innerHTML = "";
+
+    players.forEach((player) => {
+        show_spec.innerHTML += `
+      
+<div class="card relative w-[7em] h-40 sm:w-[10em] sm:h-55 md:w-[6em] md:h-40 flex-col flex items-start justify-start rounded-lg cursor-pointer text-white transition-transform duration-300 hover:brightness-110 hover:scale-105">
+                            <div class="absolute inset-0 bg-cover bg-center rounded-lg " style="background-image: url('./assets/new-card.png');"  aria-hidden="true">
+                            <div class="flex flex-col items-center justify-center absolute inset-0 rounded-lg">
+                            <div class="flex flex-row-reverse items-center gap-6 justify-between ">
+                                <img src="${player.image}" alt="${player.name}"  class="rounded-full  w-12 h-12  sm:w-20 sm:h-20 md:w-7 md:h-7">
+                                <div class="flex flex-col items-center ">
+                                    <div class="text-xs sm:text-lg font-bold">${player.rating}</div>
+                                    <div class="text-xs sm:text-xr">${player.Position}</div>
+                                </div>
+                            </div>
+                                <div class="text-xs sm:text-xr  font-semibold  ">${player.name}</div>
+
+                                <div class="flex  / gap-2 md:mb- md:gap-4 items-center justify-center">
+                                    <img src="./assets/ff.jpg" alt="${player.name}"  class="w-4 h-4 sm:w-20 sm:h-20 md:w-6 md:h-4">
+                                    <img src="./assets/image.png" alt="${player.name}"  class="w-4 h-3 sm:w-20 sm:h-20 md:w-6 md:h-4">
+                                </div>
+                                <div class="text-xs sm:text-sm flex  justify-center md:mt-1  mt-1 ml-1  ">
+                                    <span class="text-[10px] sm:text-[10px] ">PL ${player.pace}</span> 
+                                    <span class="text-[10px] sm:text-[10px] ">SH ${player.shooting}</span>
+                                    <span class="text-[10px] sm:text-[10px]">PS ${player.passing}</span>
+                                    <span class="text-[10px] sm:text-[10px] pl-2">DR ${player.dribbling}</span>
+                                    <span class="text-[10px] sm:text-[10px]">DE ${player.defending}</span>
+                                    <span class="text-[10px] sm:text-[10px]">PH ${player.physical}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+        `;
+    });
+}
+
+const cards = document.querySelectorAll('.card');
+const select_form = document.getElementById('select_form');
+
+
+
+cards.forEach((card) => {
+    card.addEventListener('click', () => {
+            select_form.style.display = "flex";
+    });
+});
+
+document.querySelector('#closee').addEventListener('click',()=>{
+    select_form.style.display="none"
+})
 
