@@ -9,6 +9,16 @@
     
     <title>FUT Champions Web App Ultimate Team - Gérer Votre Équipe Ultime</title>
     <link rel="icon" href="./assets/logo.png" type="image/x-icon">
+    <style>
+        .scrollbar-hide {
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+    </style>
 
 </head>
 <body >
@@ -51,7 +61,7 @@
       
     </div>
     </div>
-  </nav>
+</nav>
   
 
   <main class="flex  md:justify-between  md:items-start items-center   flex-col-reverse md:flex-row md:gap-20 md:my-20  md:mx-20 my-10 mx-2  gap-10 ">
@@ -65,10 +75,8 @@
                 <div class="grid grid-rows-4 gap-5 w-full h-full my-1">
         
                     <div class="flex justify-center md:gap-20">
-                        <div id="card" class="relative w-[11%] h-40 flex items-center  flex-col justify-center rounded-lg cursor-pointer text-white  transition-transform duration-300 hover:brightness-110 hover:scale-105" style="filter: drop-shadow(0px 0px 3px red);">
-                            <div class="absolute inset-0 bg-[url('./assets/placeholder-card-normal.webp')] bg-cover bg-center rounded-lg flex justify-center items-end  " aria-hidden="true">
-                                <!-- <div class="h-6 w-12 bg-red-500 rounded-full text-center">ST</div> -->
-                            </div>
+                        <div  class="relative w-[11%] h-30 flex items-center  flex-col justify-center rounded-lg cursor-pointer text-white  transition-transform duration-300 hover:brightness-110 hover:scale-105" style="filter: drop-shadow(0px 0px 3px red);">
+                            <div class="absolute inset-0 bg-[url('./assets/placeholder-card-normal.webp')] bg-cover bg-center rounded-lg flex justify-center items-end  " aria-hidden="true"></div>
                             <span class="relative z-10 text-center font-semibold">Advenced Forward </span>
                             <span class="relative z-10">Attack </span>
                             <div  class="relative z-10">
@@ -128,14 +136,31 @@
                                 CB
                             </div>                       
                          </div>
-                        <div class="relative  w-[11%] h-30 flex flex-col items-center justify-center rounded-lg cursor-pointer text-white  transition-transform duration-300 hover:brightness-110 hover:scale-105" style="filter: drop-shadow(0px 0px 3px red);">
-                            <div class="absolute inset-0 bg-[url('./assets/placeholder-card-normal.webp')] bg-cover bg-center rounded-lg "aria-hidden="true"></div>
-                            <span class="relative z-10 text-center font-semibold">Defender </span>
-                            <span class="relative z-10">Defender </span>
-                            <div  class="relative z-10">
-                                CB
-                            </div>                     
-                             </div>
+                        <div class="relative w-[7em] h-44 sm:w-[10em] sm:h-55 md:w-[6em] md:h-40 flex-col flex items-start justify-start rounded-lg cursor-pointer text-white transition-transform duration-300 hover:brightness-110 hover:scale-105">
+
+                            <div class="absolute inset-0 bg-cover bg-center rounded-lg " style="background-image: url('./assets/new-card.png');"  aria-hidden="true">
+                            <div class="flex flex-col items-center justify-center absolute inset-0 rounded-lg">
+                            <div class="flex flex-row-reverse items-center gap-4 justify-between ">
+                                <img src="./assets/bg.webp" alt=""  class="rounded-full  w-12 h-12  sm:w-20 sm:h-20 md:w-7 md:h-7">
+                                <div class="flex flex-col items-center justify-center">
+                                    <div class="text-xs sm:text-lg font-bold">100</div>
+                                    <div class="text-xs sm:text-xr">LS</div>
+                                </div>
+                            </div>
+                                <div class="text-xs sm:text-sm font-semibold  ">charaf</div>
+                                <div class="text-xs sm:text-sm flex  justify-center md:mt-1  mt-1 ml-1 md:mb-4 ">
+                                    <span class="text-[10px] sm:text-[10px] ">PL 99</span> 
+                                    <span class="text-[10px] sm:text-[10px] ">SH 99</span>
+                                    <span class="text-[10px] sm:text-[10px]">PS 80</span>
+
+                                    <span class="text-[10px] sm:text-[10px] pl-2">DR 80</span>
+                                    <span class="text-[10px] sm:text-[10px]">DE 90</span>
+                                    <span class="text-[10px] sm:text-[10px]">PH 80</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
                         <div class="relative  w-[11%] h-30 flex-col flex items-center justify-center rounded-lg cursor-pointer text-white  transition-transform duration-300 hover:brightness-110 hover:scale-105" style="filter: drop-shadow(0px 0px 3px red);">
                             <div class="absolute inset-0 bg-[url('./assets/placeholder-card-normal.webp')] bg-cover bg-center rounded-lg "aria-hidden="true"></div>
                             <span class="relative z-10 text-center font-semibold">Defender </span>
@@ -169,16 +194,16 @@
    
     
    
-    <section class="w-80 h-auto border-2 border-red-500 rounded-lg border-2   bg-gray-700 flex flex-col items-start ">
-        <!-- <button class="text-white my-4  inline-flex w-40 justify-center bg-red-700 hover:bg-red-800 focus:ring-1 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+    <section  class="w-80 h-auto border-2 border-red-500 rounded-lg border-2   bg-gray-700 flex flex-col items-center justify-center">
+        <button id="card" class="text-white my-4   w-40  bg-red-700 hover:bg-red-800 focus:ring-1 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
             New contract
-        </button> -->
-        <div class="flex flex-col  w-full p-2 ">
+        </button>
+        <!-- <div class="flex flex-col  w-full p-2 ">
             <div class="flex flex-col items-start p-2 gap-2 ">
                 <label for="Squad" class="text-xl text-white  font-semibold">Create Squad</label>
                  <input type="text" id="Squad" placeholder="Squad name"  class="w-[95%] h-auto rounded bg-gray-800 border-1 text-white placeholder:text-xs pl-4 pb-1" >
             </div>
-        </div><hr class="w-40 mt-2 ml-8 opacity-50">
+        </div><hr class="w-40 mt-2 ml-8 opacity-50"> -->
 
         <div class="flex flex-col  w-full p-2 ">
             <div class="flex flex-col items-start p-2 gap-2 ">
@@ -198,31 +223,18 @@
                   </select>
             </div>
         </div><br>
+        
+        
     </section>
+    
   </main>
 
   <!-- md:my-20  md:mx-20 my-10 mx-2  -->
 
-<section class="flex w-full md:h-80  h-[10vh]   flex justify-center md:mr-40 gap-8 flex-wrap   ">
-    
-    <div class="relative  w-[7em] h-44  flex-col flex items-center justify-center rounded-lg cursor-pointer text-white  transition-transform duration-300 hover:brightness-110 hover:scale-105" style="filter: drop-shadow(0px 0px 3px red);">
-        <div class="absolute inset-0 bg-[url('./assets/placeholder-card-normal.webp')] bg-cover bg-center rounded-lg" aria-hidden="true"></div>
-        <span class="relative z-10 text-center font-semibold flex text-xs ">Defender </span>
-        <span class="relative z-10">Defender </span>
-        <div  class="relative z-10">
-            CB
-        </div>                         
-    </div>
-    <div class="relative  w-[7em] h-44  flex-col flex items-center justify-center rounded-lg cursor-pointer text-white  transition-transform duration-300 hover:brightness-110 hover:scale-105" style="filter: drop-shadow(0px 0px 3px red);">
-        <div class="absolute inset-0 bg-[url('./assets/placeholder-card-normal.webp')] bg-cover bg-center rounded-lg" aria-hidden="true"></div>
-        <span class="relative z-10 text-center font-semibold flex text-xs ">Defender </span>
-        <span class="relative z-10">Defender </span>
-        <div  class="relative z-10">
-            CB
-        </div>                         
-    </div>
-  
+<section id="show"  class="flex w-full md:h-auto flex-wrap h-auto p-8 flex justify-center md:mr-40 gap-8 flex-wrap  bg-gray-300  ">
+   
 </section>
+
 
 
 
@@ -252,7 +264,7 @@
                     </div>
                     <div class="mb-5">
                       <label for="image" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white"> Image</label>
-                      <input type="file" id="image" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                      <input type="text" placeholder="Enter image URL" id="image" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
                     </div>
                     <div class="mb-5">
                       <label for="Position" class="block mb-2 text-sm font-medium text-gray-300 ">Position</label>
@@ -271,13 +283,13 @@
                     </div>
 
                     <div class="mb-5">
-                        <label for="nationality" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">Nationality</label>
+                        <label for="nationality" class="block mb-2 text-sm font-medium  text-gray-300 dark:text-white">Nationality</label>
                         <input type="text" id="nationality" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
                     </div>
 
                     <div class="mb-5">
                         <label for="flag" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white"> Flag</label>
-                        <input type="file" id="flag" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
+                        <input type="text" placeholder="Enter image URL" id="flag" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
                     </div>
 
                     <div class="mb-5">
@@ -287,37 +299,37 @@
 
                     <div class="mb-5">
                         <label for="Logo" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white"> Logo</label>
-                        <input type="file" id="Logo" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
+                        <input type="text" placeholder="Enter image URL" id="Logo" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
                     </div>
                         
-                    <div class="flex gap-2">
-                       <div class="mb-5">
+                    <div class="grid grid-cols-2 gap-4 md:grid-cols-4 ">
+                       <div class="mb-5 w-20">
                             <label for="rating" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">rating</label>
-                            <input type="text" id="rating" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
+                            <input type="number" id="rating" class="shadow-sm w-20 bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
                         </div>
                         <div class="mb-5">
                             <label for="pace" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">pace</label>
-                            <input type="text" id="pace" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
+                            <input type="number" id="pace" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
                         </div>
                         <div class="mb-5">
                             <label for="shooting" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">shooting</label>
-                            <input type="text" id="shooting" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
+                            <input type="number" id="shooting" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
                         </div>
                         <div class="mb-5">
                             <label for="passing" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">passing</label>
-                            <input type="text" id="passing" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
+                            <input type="number" id="passing" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
                         </div>
                         <div class="mb-5">
                             <label for="dribbling" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">dribbling</label>
-                            <input type="text" id="dribbling" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
+                            <input type="number" id="dribbling" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
                         </div>
                         <div class="mb-5">
                             <label for="defending" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">defending</label>
-                            <input type="text" id="defending" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
+                            <input type="number" id="defending" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
                         </div>
                         <div class="mb-5">
                             <label for="physical" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">physical</label>
-                            <input type="text" id="physical" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
+                            <input type="number" id="physical" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" required />
                         </div>
 
                     </div>
@@ -327,10 +339,10 @@
                       </div>
                       <label for="terms" class="ms-2 text-sm font-medium text-gray-300 dark:text-gray-300">I agree with the <a href="#" class="text-red-600 hover:underline ">terms and conditions</a></label>
                     </div> -->
+                    <button  type="submit" id="add_new" class="text-white inline-flex w-full justify-center bg-red-700 hover:bg-red-800 focus:ring-1 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+                        New contract
+                    </button>
                   </form>
-                <button id="add_new" class="text-white inline-flex w-full justify-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
-                    New contract
-                </button>
             </div>
         </div>
     </div>
