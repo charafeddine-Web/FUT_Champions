@@ -24,7 +24,6 @@ document.getElementById('add_new').addEventListener('click',function(){
         return; 
     }
 
-    // let existen=players.some(e=>player.nom);
 
 
     let nom = document.getElementById('name').value.toLowerCase().trim();
@@ -43,8 +42,13 @@ document.getElementById('add_new').addEventListener('click',function(){
     let physical = document.getElementById('physical').value.toLowerCase().trim();
     let role = document.getElementById('role').value.toLowerCase().trim();
 
+    // if (!nom || typeof nom !== "string") {
+    //     alert("Erreur : La  'nom' est invalide ou non définie.");
+    //     return;
+    // }
+
     if (
-        !nom || !image || !Position || !nationality || !flag || !Club ||
+         !image || !Position || !nationality || !flag || !Club ||
         !Logo || !rating || !pace || !shooting || !passing ||
         !dribbling || !defending || !physical || !role
     ) {
@@ -52,11 +56,27 @@ document.getElementById('add_new').addEventListener('click',function(){
         return;
     }
 
-    if(rating < 1 || rating > 100 ){
-        // rating=100;
-        alert("Erreur : La note (rating) doit être comprise entre 1 et 100.");
+
+    // if(role=="Goalkeeper"){
+
+    // }
+
+
+   
+    
+    if (
+        rating < 1 || rating > 100 ||
+        pace < 1 || pace > 100 ||
+        shooting < 1 || shooting > 100 ||
+        passing < 1 || passing > 100 ||
+        dribbling < 1 || dribbling > 100 ||
+        defending < 1 || defending > 100 ||
+        physical < 1 || physical > 100
+    ) {
+        alert("Erreur : Toutes les notes doivent être comprises entre 1 et 100.");
         return;
     }
+    
 
     const validPositions = ["RW", "ST", "CM", "CB", "LW", "CDM", "RB", "LB", "GK", "HC"];
 
@@ -65,6 +85,12 @@ document.getElementById('add_new').addEventListener('click',function(){
         return;
     }
 
+    let existen = players.some(player => player.name.toLowerCase() === nom.toLowerCase());
+    if (existen) {
+        alert("Erreur : Le joueur existe déjà.");
+        return;
+    }
+    
     let player={
         name:nom,
         role:role,
@@ -82,34 +108,22 @@ document.getElementById('add_new').addEventListener('click',function(){
         defending:defending,
         physical:physical
     }
+   
+    
     players.unshift(player);
     localStorage.setItem("players", JSON.stringify(players));
     show_players_remplacement();
     show_players_spec();
 
-
-
-      document.getElementById('name').value="";
-     document.getElementById('image').value="";
-     document.getElementById('nationality').value="";
-     document.getElementById('flag').value="";
-     document.getElementById('Club').value="";
-     document.getElementById('Logo').value="";
-     document.getElementById('rating').value="";
-     document.getElementById('pace').value="";
-     document.getElementById('shooting').value="";
-     document.getElementById('passing').value="";
-     document.getElementById('dribbling').value="";
-     document.getElementById('defending').value="";
-     document.getElementById('physical').value="";
-     document.getElementById('role').value="";
+    document.getElementById('playerForm').reset();
 
 })
 
 /*******************************************************************************************************/
 /**
      * show players 
-*/function show_players_remplacement() {
+*/
+function show_players_remplacement() {
     const parent = document.querySelector('.show');
     parent.innerHTML = "";
 
@@ -224,10 +238,11 @@ function editPlayer(index) {
     document.querySelector('#close').addEventListener('click',()=>{
         form.style.display="none"
     })
-    show_form.addEventListener('click',function(){
-        form.style.display="flex"
-    })
+
+    form.style.display="flex"
+    
     const player = players[index];
+    document.getElementById('role').value = player.role;
     document.getElementById('name').value = player.name;
     document.getElementById('image').value = player.image;
     document.getElementById('Position').value = player.Position;
@@ -242,7 +257,7 @@ function editPlayer(index) {
     document.getElementById('dribbling').value = player.dribbling;
     document.getElementById('defending').value = player.defending;
     document.getElementById('physical').value = player.physical;
-    document.getElementById('role').value = player.role;
+
 
     document.getElementById('add_new').innerText = "Save Changes";
     document.getElementById('add_new').addEventListener('click', function saveChanges() {
@@ -279,6 +294,7 @@ function editPlayer(index) {
 /**
  * Delete player
  */
+
 function deletePlayer(index) {
     if (confirm("Êtes-vous sûr de vouloir supprimer ce joueur ?")) {
         players.splice(index, 1); 
