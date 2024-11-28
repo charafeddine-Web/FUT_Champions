@@ -182,7 +182,7 @@ function show_players_spec() {
     players.forEach((player) => {
         show_spec.innerHTML += `
       
-<div class="card relative w-[7em] h-40 sm:w-[10em] sm:h-55 md:w-[6em] md:h-40 flex-col flex items-start justify-start rounded-lg cursor-pointer text-white transition-transform duration-300 hover:brightness-110 hover:scale-105">
+<div  class="card relative w-[7em] h-40 sm:w-[10em] sm:h-55 md:w-[6em] md:h-40 flex-col flex items-start justify-start rounded-lg cursor-pointer text-white transition-transform duration-300 hover:brightness-110 hover:scale-105">
                             <div class="absolute inset-0 bg-cover bg-center rounded-lg " style="background-image: url('./assets/new-card.png');"  aria-hidden="true">
                             <div class="flex flex-col items-center justify-center absolute inset-0 rounded-lg">
                             <div class="flex flex-row-reverse items-center gap-6 justify-between ">
@@ -212,6 +212,59 @@ function show_players_spec() {
         `;
     });
 }
+function replaceDefaultCard(playerId) {
+    const player = players.find((p) => p.Position === playerId);
+    
+    // if (!player) {
+    //     console.error("Joueur introuvable avec l'ID :", playerId);
+    //     return;
+    // }
+
+    // Sélectionner la carte spécifique avec l'attribut data-id correspondant
+    const targetCard = document.querySelector(`.default-card[data-id="${playerId}"]`);
+    
+    // if (!targetCard) {
+    //     console.error("Carte introuvable pour le joueur :", playerId);
+    //     return;
+    // }
+
+    targetCard.innerHTML = `
+        <div class="card relative w-[5em] h-40 sm:w-[10em] sm:h-55 md:w-[90%] md:h-30 flex-col flex items-start justify-start rounded-lg cursor-pointer text-white transition-transform duration-300 hover:brightness-110 hover:scale-105">
+            <div class="absolute inset-0 bg-cover bg-center rounded-lg" style="background-image: url('./assets/new-card.png');" aria-hidden="true">
+                <div class="flex flex-col items-center justify-center absolute inset-0 rounded-lg">
+                    <div class="flex flex-row-reverse items-center gap-2 md:gap-2 justify-between">
+                        <img src="${player.image}" alt="${player.name}" class="rounded-full w-12 h-12 sm:w-20 sm:h-20 md:w-12 md:h-12">
+                        <div class="flex flex-col items-center">
+                            <div class="text-xs sm:text-lg font-bold">${player.rating}</div>
+                            <div class="text-xs sm:text-xr">${player.Position}</div>
+                        </div>
+                    </div>
+                    <div class="text-xs sm:text-[11px] font-semibold">${player.name}</div>
+                    <div class="flex gap-2 md:gap-4 items-center justify-center md:mb-0.5 mb-2">
+                        <img src="${player.Logo}" alt="${player.name}" class="w-4 h-4 sm:w-20 sm:h-20 md:w-6 md:h-4">
+                        <img src="${player.flag}" alt="${player.name}" class="w-4 h-3 sm:w-20 sm:h-20 md:w-6 md:h-4">
+                    </div>
+                    <div class="text-xs sm:text-sm flex justify-center px-0.5">
+                        <span class="text-[7px] sm:text-[9px]">PL ${player.pace}</span>
+                        <span class="text-[7px] sm:text-[9px]">SH ${player.shooting}</span>
+                        <span class="text-[7px] sm:text-[9px]">PS ${player.passing}</span>
+                        <span class="text-[7px] sm:text-[9px] pl-2">DR ${player.dribbling}</span>
+                        <span class="text-[7px] sm:text-[9px]">DE ${player.defending}</span>
+                        <span class="text-[7px] sm:text-[9px]">PH ${player.physical}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+document.querySelectorAll(".default-card").forEach((card) => {
+    card.addEventListener("click", (event) => {
+        const playerId = card.getAttribute("data-id"); 
+        replaceDefaultCard(playerId);
+    });
+});
+
 
 const cards = document.querySelectorAll('.card');
 const select_form = document.getElementById('select_form');
@@ -242,7 +295,6 @@ function editPlayer(index) {
     form.style.display="flex"
     
     const player = players[index];
-    document.getElementById('role').value = player.role;
     document.getElementById('name').value = player.name;
     document.getElementById('image').value = player.image;
     document.getElementById('Position').value = player.Position;
@@ -257,12 +309,15 @@ function editPlayer(index) {
     document.getElementById('dribbling').value = player.dribbling;
     document.getElementById('defending').value = player.defending;
     document.getElementById('physical').value = player.physical;
+    document.getElementById('role').value = player.role;
 
 
     document.getElementById('add_new').innerText = "Save Changes";
     document.getElementById('add_new').addEventListener('click', function saveChanges() {
         let updatedPlayer = {
+            
             name: document.getElementById('name').value.toLowerCase().trim(),
+            role: document.getElementById('role').value.toLowerCase().trim(),
             image: document.getElementById('image').value.toLowerCase().trim(),
             Position: document.getElementById('Position').value.trim(),
             nationality: document.getElementById('nationality').value.toLowerCase().trim(),
@@ -275,8 +330,7 @@ function editPlayer(index) {
             passing: document.getElementById('passing').value.toLowerCase().trim(),
             dribbling: document.getElementById('dribbling').value.toLowerCase().trim(),
             defending: document.getElementById('defending').value.toLowerCase().trim(),
-            physical: document.getElementById('physical').value.toLowerCase().trim(),
-            role: document.getElementById('role').value.toLowerCase().trim()
+            physical: document.getElementById('physical').value.toLowerCase().trim()
         };
 
         players[index] = updatedPlayer; 
@@ -303,3 +357,48 @@ function deletePlayer(index) {
         show_players_spec();
     }
 }
+
+
+
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const roleSelect = document.getElementById('role');
+    const playerStats = document.getElementById('player-stats');
+    
+    /**
+     * 
+     * @param {role} role Function to hide statis for Goalkeeper
+     */
+    
+    function toggleStatsForRole(role) {
+        if (role === 'Goalkeeper') {
+            document.getElementById('rating').parentElement.style.display = 'none';
+            document.getElementById('pace').parentElement.style.display = 'none';
+            document.getElementById('shooting').parentElement.style.display = 'none';
+            document.getElementById('passing').parentElement.style.display = 'none';
+            document.getElementById('dribbling').parentElement.style.display = 'none';
+            document.getElementById('defending').parentElement.style.display = 'none';
+            document.getElementById('physical').parentElement.style.display = 'none';
+        } else {
+            document.getElementById('rating').parentElement.style.display = 'block';
+            document.getElementById('pace').parentElement.style.display = 'block';
+            document.getElementById('shooting').parentElement.style.display = 'block';
+            document.getElementById('passing').parentElement.style.display = 'block';
+            document.getElementById('dribbling').parentElement.style.display = 'block';
+            document.getElementById('defending').parentElement.style.display = 'block';
+            document.getElementById('physical').parentElement.style.display = 'block';
+        }
+    }
+
+    // Listen for role change
+    roleSelect.addEventListener('change', function () {
+        toggleStatsForRole(roleSelect.value);
+    });
+
+    toggleStatsForRole(roleSelect.value);
+});
