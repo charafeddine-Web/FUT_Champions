@@ -184,7 +184,7 @@ function show_players_remplacement() {
 
         parent.innerHTML += `
         <div class="relative w-[7em] h-44 sm:w-[10em] sm:h-55 md:w-[12em] md:h-80 flex-col flex items-center justify-center rounded-lg cursor-pointer text-white transition-transform duration-300 hover:brightness-110 hover:scale-105 group">
-            <div class="absolute inset-0 bg-cover bg-center rounded-lg" style="background-image: url('./assets/new-card.png');" aria-hidden="true">
+            <div class="absolute inset-0 bg-cover bg-center rounded-lg" style="background-image: url('./src/assets/new-card.png');" aria-hidden="true">
                 <div class="flex flex-col items-center justify-center absolute inset-0 rounded-lg">
                     <div class="flex flex-row-reverse items-center md:justify-between gap-6 md:gap-10">
                         <img src="${player.image}" alt="Image of ${player.name}" class="rounded-full mb-2 w-12 h-12 sm:w-20 sm:h-20 md:w-28 md:h-28">
@@ -246,7 +246,7 @@ function show_players_remplacement() {
 
 /**
  * 
- * @param {*} players openPopup afficher les joueurs
+ * @param {*} players open Popup afficher les joueurs
  */
 
 function openPopup(players) {
@@ -256,7 +256,7 @@ function openPopup(players) {
     playerList.innerHTML = players
         .map(
             (player) => `
-        <div class="card relative w-full p-4 flex items-center justify-between bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200" data-player-id="${player.name}" >
+        <div class="card relative w-full p-4 flex items-center justify-between bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 " data-player-id="${player.name}" >
             <div class="flex items-center gap-4">
                 <img src="${player.image}" alt="${player.name}" class="rounded-full w-12 h-12">
                 <div>
@@ -294,40 +294,79 @@ function closePopup() {
  *  */ 
 function replaceDefaultCardWithPlayer(player) {
     const targetCard = document.querySelector(`.default-card[data-id="${player.Position}"]`);
-
+    // Debugging: Check if targetCard is found
+    console.log("Target Card:", targetCard);
+    const isGoalkeeper = player.role.toLowerCase() === "goalkeeper";
+    
     if (targetCard) {
-        targetCard.innerHTML = `
-        <div class="card relative w-[5em] h-40 sm:w-[10em] sm:h-55 md:w-[90%] md:h-30 flex-col flex items-start justify-start rounded-lg cursor-pointer text-white transition-transform duration-300 hover:brightness-110 hover:scale-105">
-            <div class="absolute inset-0 bg-cover bg-center rounded-lg" style="background-image: url('./assets/new-card.png');" aria-hidden="true">
-                <div class="flex flex-col items-center justify-center absolute inset-0 rounded-lg">
-                    <div class="flex flex-row-reverse items-center gap-2 md:gap-2 justify-between">
-                        <img src="${player.image}" alt="${player.name}" class="rounded-full w-12 h-12 sm:w-20 sm:h-20 md:w-12 md:h-12">
-                        <div class="flex flex-col items-center">
-                            <div class="text-xs sm:text-lg font-bold">${player.rating}</div>
-                            <div class="text-xs sm:text-xr">${player.Position}</div>
+        // console.log("Player Object:", player);   
+        let cardContent = `
+        ${isGoalkeeper ? `
+            <div class="card relative w-[5em] h-40 sm:w-[10em] sm:h-55 md:w-[10%] md:h-20 flex-col flex items-start justify-start rounded-lg cursor-pointer text-white transition-transform duration-300 hover:brightness-110 hover:scale-105">
+                <div class="absolute inset-0 bg-cover bg-center rounded-lg" style="background-image: url('./src/assets/goalkeeper-card.png');" aria-hidden="true">
+                    <div class="flex flex-col items-center justify-center absolute inset-0 rounded-lg">
+                        <div class="flex flex-row-reverse items-center gap-2 md:gap-2 justify-between">
+                            <img src="${player.image}" alt="${player.name}" class="rounded-full w-12 h-12 sm:w-20 sm:h-20 md:w-12 md:h-12">
+                            <div class="flex flex-col items-center">
+                                <div class="text-xs sm:text-lg font-bold">${player.rating_GK}</div>
+                                <div class="text-xs sm:text-xr">${player.Position}</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="text-xs sm:text-[11px] font-semibold">${player.name}</div>
-                    <div class="flex gap-2 md:gap-4 items-center justify-center md:mb-0.5 mb-2">
-                        <img src="${player.Logo}" alt="${player.name}" class="w-4 h-4 sm:w-20 sm:h-20 md:w-6 md:h-4">
-                        <img src="${player.flag}" alt="${player.name}" class="w-4 h-3 sm:w-20 sm:h-20 md:w-6 md:h-4">
-                    </div>
-                    <div class="text-xs sm:text-sm flex justify-center px-0.5">
-                        <span class="text-[7px] sm:text-[9px]">PL ${player.pace}</span>
-                        <span class="text-[7px] sm:text-[9px]">SH ${player.shooting}</span>
-                        <span class="text-[7px] sm:text-[9px]">PS ${player.passing}</span>
-                        <span class="text-[7px] sm:text-[9px] pl-2">DR ${player.dribbling}</span>
-                        <span class="text-[7px] sm:text-[9px]">DE ${player.defending}</span>
-                        <span class="text-[7px] sm:text-[9px]">PH ${player.physical}</span>
+                        <div class="text-xs sm:text-[11px] font-semibold">${player.name}</div>
+                        <div class="flex gap-2 md:gap-4 items-center justify-center md:mb-0.5 mb-2">
+                            <img src="${player.Logo}" alt="${player.name}" class="w-4 h-4 sm:w-20 sm:h-20 md:w-6 md:h-4">
+                            <img src="${player.flag}" alt="${player.name}" class="w-4 h-3 sm:w-20 sm:h-20 md:w-6 md:h-4">
+                        </div>
+                        <div class="text-xs sm:text-sm flex justify-center px-0.5">
+                            <span class="text-[7px] sm:text-[9px]">D ${player.diving || 'N/A'}</span>
+                            <span class="text-[7px] sm:text-[9px]">H ${player.handling || 'N/A'}</span>
+                            <span class="text-[7px] sm:text-[9px]">K ${player.kicking || 'N/A'}</span>
+                            <span class="text-[7px] sm:text-[9px]">R ${player.reflexes || 'N/A'}</span>
+                            <span class="text-[7px] sm:text-[9px]">S ${player.speed || 'N/A'}</span>
+                            <span class="text-[7px] sm:text-[9px]">Pos ${player.positioning || 'N/A'}</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        ` : `
+            <div class="card relative w-[5em] h-40 sm:w-[10em] sm:h-55 md:w-[90%] md:h-30 flex-col flex items-start justify-start rounded-lg cursor-pointer text-white transition-transform duration-300 hover:brightness-110 hover:scale-105">
+                <div class="absolute inset-0 bg-cover bg-center rounded-lg" style="background-image: url('./src/assets/new-card.png');" aria-hidden="true">
+                    <div class="flex flex-col items-center justify-center absolute inset-0 rounded-lg">
+                        <div class="flex flex-row-reverse items-center gap-2 md:gap-2 justify-between">
+                            <img src="${player.image}" alt="${player.name}" class="rounded-full w-12 h-12 sm:w-20 sm:h-20 md:w-12 md:h-12">
+                            <div class="flex flex-col items-center">
+                                <div class="text-xs sm:text-lg font-bold">${player.rating}</div>
+                                <div class="text-xs sm:text-xr">${player.Position}</div>
+                            </div>
+                        </div>
+                        <div class="text-xs sm:text-[11px] font-semibold">${player.name}</div>
+                        <div class="flex gap-2 md:gap-4 items-center justify-center md:mb-0.5 mb-2">
+                            <img src="${player.Logo}" alt="${player.name}" class="w-4 h-4 sm:w-20 sm:h-20 md:w-6 md:h-4">
+                            <img src="${player.flag}" alt="${player.name}" class="w-4 h-3 sm:w-20 sm:h-20 md:w-6 md:h-4">
+                        </div>
+                        <div class="text-xs sm:text-sm flex justify-center px-0.5">
+                            <span class="text-[7px] sm:text-[9px]">PL ${player.pace}</span>
+                            <span class="text-[7px] sm:text-[9px]">SH ${player.shooting}</span>
+                            <span class="text-[7px] sm:text-[9px]">PS ${player.passing}</span>
+                            <span class="text-[7px] sm:text-[9px] pl-2">DR ${player.dribbling}</span>
+                            <span class="text-[7px] sm:text-[9px]">DE ${player.defending}</span>
+                            <span class="text-[7px] sm:text-[9px]">PH ${player.physical}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `}
         `;
+        
+        targetCard.innerHTML = cardContent;
+    } else {
+        console.log("Target card not found.");
     }
 }
 
+
 // Ajouter un gestionnaire d'événements pour chaque carte par défaut
+
 document.querySelectorAll(".default-card").forEach((card) => {
     card.addEventListener("click", (event) => {
         const playerId = card.getAttribute("data-id");
@@ -336,7 +375,6 @@ document.querySelectorAll(".default-card").forEach((card) => {
     });
 });
 document.getElementById("close-popup").addEventListener("click", closePopup);
-
 
 
 
@@ -420,7 +458,6 @@ function editPlayer(index) {
 /**
  * Delete player
  */
-
 function deletePlayer(index) {
     if (confirm("Êtes-vous sûr de vouloir supprimer ce joueur ?")) {
         players.splice(index, 1); 
@@ -429,12 +466,6 @@ function deletePlayer(index) {
         show_players_spec();
     }
 }
-
-
-
-
-
-
 
 
 
