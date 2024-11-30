@@ -52,19 +52,13 @@ document.getElementById('add_new').addEventListener('click',function(){
         return;
     }
     
-   if (!nom || !image || !Position || !nationality || !flag || !Club || !Logo || !rating || !role) {
+   if (!nom || !image || !Position || !nationality || !flag || !Club || !Logo  ) {
     alert("Erreur : Veuillez remplir tous les champs obligatoires.");
     return;
 }
 // Validate 
-if ( rating < 1 || rating > 100 ||(Position !== 'Goalkeeper' && (
-    pace < 1 || pace > 100 ||
-    shooting < 1 || shooting > 100 ||
-    passing < 1 || passing > 100 ||
-    dribbling < 1 || dribbling > 100 ||
-    defending < 1 || defending > 100 ||
-    physical < 1 || physical > 100
-)) ||
+
+if ( rating < 1 || rating > 100 ||
     (Position === 'Goalkeeper' && (
         diving < 1 || diving > 100 ||
         handling < 1 || handling > 100 ||
@@ -77,17 +71,23 @@ if ( rating < 1 || rating > 100 ||(Position !== 'Goalkeeper' && (
     alert("Erreur : Toutes les notes doivent être comprises entre 1 et 100.");
     return;
 }
-    const validPositions = ["RW", "ST", "CM", "CB", "LW", "CDM", "RB", "LB", "GK", "HC"];
+    const validPositions = ["RW", "ST", "CM", "LCB","RCB", "LW", "CDM", "RB", "LB", "GK", "HC"];
 
     if (!validPositions.includes(Position)) {
         alert("Erreur : La position saisie est invalide. Veuillez choisir une position valide.");
         return;
     }
-    let exists = players.some(player => player.name.toLowerCase() === nom);
+    let exists = players.some(player => 
+        player.name.toLowerCase() === nom || 
+        (player.Club.toLowerCase() === Club && player.Position.toLowerCase() === Position) || 
+        player.image.toLowerCase() === image
+    );
+    
     if (exists) {
-        alert("Erreur : Le joueur existe déjà.");
+        alert("Erreur : Le joueur existe déjà avec le même nom, club et position, ou image.");
         return;
     }
+    
 
 let newPlayer;
 
@@ -289,80 +289,84 @@ function openPopup(players) {
 function closePopup() {
     document.getElementById("player-popup").classList.add("hidden");
 }
+
 /**
  * function replaceDefaultCardWithPlayer
- *  */ 
-function replaceDefaultCardWithPlayer(player) {
+ *  */ function replaceDefaultCardWithPlayer(player) {
     const targetCard = document.querySelector(`.default-card[data-id="${player.Position}"]`);
-    // Debugging: Check if targetCard is found
-    console.log("Target Card:", targetCard);
     const isGoalkeeper = player.role.toLowerCase() === "goalkeeper";
-    
+
     if (targetCard) {
-        // console.log("Player Object:", player);   
+        // Save the default card content only once in a data attribute
+        if (!targetCard.dataset.defaultContent) {
+            targetCard.dataset.defaultContent = targetCard.innerHTML;
+        }
+
+        // Create the new player card content
         let cardContent = `
-        ${isGoalkeeper ? `
-            <div class="card relative w-[5em] h-40 sm:w-[10em] sm:h-55 md:w-[10%] md:h-20 flex-col flex items-start justify-start rounded-lg cursor-pointer text-white transition-transform duration-300 hover:brightness-110 hover:scale-105">
-                <div class="absolute inset-0 bg-cover bg-center rounded-lg" style="background-image: url('./src/assets/goalkeeper-card.png');" aria-hidden="true">
-                    <div class="flex flex-col items-center justify-center absolute inset-0 rounded-lg">
-                        <div class="flex flex-row-reverse items-center gap-2 md:gap-2 justify-between">
-                            <img src="${player.image}" alt="${player.name}" class="rounded-full w-12 h-12 sm:w-20 sm:h-20 md:w-12 md:h-12">
-                            <div class="flex flex-col items-center">
-                                <div class="text-xs sm:text-lg font-bold">${player.rating_GK}</div>
-                                <div class="text-xs sm:text-xr">${player.Position}</div>
-                            </div>
+        <div class="card-container relative w-[5em] h-40 sm:w-[10em] sm:h-55 md:w-[90%] md:h-30 flex-col flex items-start justify-start rounded-lg cursor-pointer text-white transition-transform duration-300 hover:brightness-110 hover:scale-105">
+            <div class="absolute inset-0 bg-cover bg-center rounded-lg" style="background-image: url('${isGoalkeeper ? './src/assets/goalkeeper-card.png' : './src/assets/new-card.png'}');" aria-hidden="true">
+                <div class="flex flex-col items-center justify-center absolute inset-0 rounded-lg">
+                    <div class="flex flex-row-reverse items-center gap-2 md:gap-2 justify-between">
+                        <img src="${player.image}" alt="${player.name}" class="rounded-full w-12 h-12 sm:w-20 sm:h-20 md:w-12 md:h-12">
+                        <div class="flex flex-col items-center">
+                            <div class="text-xs sm:text-lg font-bold">${isGoalkeeper ? player.rating_GK : player.rating}</div>
+                            <div class="text-xs sm:text-xr">${player.Position}</div>
                         </div>
-                        <div class="text-xs sm:text-[11px] font-semibold">${player.name}</div>
-                        <div class="flex gap-2 md:gap-4 items-center justify-center md:mb-0.5 mb-2">
-                            <img src="${player.Logo}" alt="${player.name}" class="w-4 h-4 sm:w-20 sm:h-20 md:w-6 md:h-4">
-                            <img src="${player.flag}" alt="${player.name}" class="w-4 h-3 sm:w-20 sm:h-20 md:w-6 md:h-4">
-                        </div>
-                        <div class="text-xs sm:text-sm flex justify-center px-0.5">
-                            <span class="text-[7px] sm:text-[9px]">D ${player.diving || 'N/A'}</span>
-                            <span class="text-[7px] sm:text-[9px]">H ${player.handling || 'N/A'}</span>
-                            <span class="text-[7px] sm:text-[9px]">K ${player.kicking || 'N/A'}</span>
-                            <span class="text-[7px] sm:text-[9px]">R ${player.reflexes || 'N/A'}</span>
-                            <span class="text-[7px] sm:text-[9px]">S ${player.speed || 'N/A'}</span>
-                            <span class="text-[7px] sm:text-[9px]">Pos ${player.positioning || 'N/A'}</span>
-                        </div>
+                    </div>
+                    <div class="text-xs sm:text-[11px] font-semibold">${player.name}</div>
+                    <div class="flex gap-2 md:gap-4 items-center justify-center md:mb-0.5 mb-2">
+                        <img src="${player.Logo}" alt="${player.name}" class="w-4 h-4 sm:w-20 sm:h-20 md:w-6 md:h-4">
+                        <img src="${player.flag}" alt="${player.name}" class="w-4 h-3 sm:w-20 sm:h-20 md:w-6 md:h-4">
+                    </div>
+                    <div class="text-xs sm:text-sm flex justify-center px-0.5">
+                        ${isGoalkeeper 
+                            ? `<span class="text-[7px] sm:text-[9px]">D ${player.diving || 'N/A'}</span>
+                               <span class="text-[7px] sm:text-[9px]">H ${player.handling || 'N/A'}</span>
+                               <span class="text-[7px] sm:text-[9px]">K ${player.kicking || 'N/A'}</span>
+                               <span class="text-[7px] sm:text-[9px]">R ${player.reflexes || 'N/A'}</span>
+                               <span class="text-[7px] sm:text-[9px]">S ${player.speed || 'N/A'}</span>
+                               <span class="text-[7px] sm:text-[9px]">Pos ${player.positioning || 'N/A'}</span>`
+                            : `<span class="text-[7px] sm:text-[9px]">PL ${player.pace}</span>
+                               <span class="text-[7px] sm:text-[9px]">SH ${player.shooting}</span>
+                               <span class="text-[7px] sm:text-[9px]">PS ${player.passing}</span>
+                               <span class="text-[7px] sm:text-[9px]">DR ${player.dribbling}</span>
+                               <span class="text-[7px] sm:text-[9px]">DE ${player.defending}</span>
+                               <span class="text-[7px] sm:text-[9px]">PH ${player.physical}</span>`
+                        }
                     </div>
                 </div>
             </div>
-        ` : `
-            <div class="card relative w-[5em] h-40 sm:w-[10em] sm:h-55 md:w-[90%] md:h-30 flex-col flex items-start justify-start rounded-lg cursor-pointer text-white transition-transform duration-300 hover:brightness-110 hover:scale-105">
-                <div class="absolute inset-0 bg-cover bg-center rounded-lg" style="background-image: url('./src/assets/new-card.png');" aria-hidden="true">
-                    <div class="flex flex-col items-center justify-center absolute inset-0 rounded-lg">
-                        <div class="flex flex-row-reverse items-center gap-2 md:gap-2 justify-between">
-                            <img src="${player.image}" alt="${player.name}" class="rounded-full w-12 h-12 sm:w-20 sm:h-20 md:w-12 md:h-12">
-                            <div class="flex flex-col items-center">
-                                <div class="text-xs sm:text-lg font-bold">${player.rating}</div>
-                                <div class="text-xs sm:text-xr">${player.Position}</div>
-                            </div>
-                        </div>
-                        <div class="text-xs sm:text-[11px] font-semibold">${player.name}</div>
-                        <div class="flex gap-2 md:gap-4 items-center justify-center md:mb-0.5 mb-2">
-                            <img src="${player.Logo}" alt="${player.name}" class="w-4 h-4 sm:w-20 sm:h-20 md:w-6 md:h-4">
-                            <img src="${player.flag}" alt="${player.name}" class="w-4 h-3 sm:w-20 sm:h-20 md:w-6 md:h-4">
-                        </div>
-                        <div class="text-xs sm:text-sm flex justify-center px-0.5">
-                            <span class="text-[7px] sm:text-[9px]">PL ${player.pace}</span>
-                            <span class="text-[7px] sm:text-[9px]">SH ${player.shooting}</span>
-                            <span class="text-[7px] sm:text-[9px]">PS ${player.passing}</span>
-                            <span class="text-[7px] sm:text-[9px] pl-2">DR ${player.dribbling}</span>
-                            <span class="text-[7px] sm:text-[9px]">DE ${player.defending}</span>
-                            <span class="text-[7px] sm:text-[9px]">PH ${player.physical}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `}
+            <button class="delete-icon absolute top-0 right-0 bg-red-500 text-white px-2 rounded-full hidden hover:bg-red-600">X</button>
+        </div>
         `;
-        
+
+        // Replace the card content with the new player card
         targetCard.innerHTML = cardContent;
+
+        // Add event listener for the delete button
+        const deleteButton = targetCard.querySelector(".delete-icon");
+        deleteButton.addEventListener("click", () => {
+            // Restore the original default card content
+            targetCard.innerHTML = targetCard.dataset.defaultContent;
+            console.log(`${player.name} removed and default card restored.`);
+        });
+
+        // Show delete button on hover
+        const cardContainer = targetCard.querySelector(".card-container");
+        cardContainer.addEventListener("mouseenter", () => {
+            deleteButton.classList.remove("hidden");
+        });
+        cardContainer.addEventListener("mouseleave", () => {
+            deleteButton.classList.add("hidden");
+        });
     } else {
         console.log("Target card not found.");
     }
 }
+
+
+
 
 
 // Ajouter un gestionnaire d'événements pour chaque carte par défaut
@@ -398,60 +402,118 @@ document.querySelector('#closee').addEventListener('click',()=>{
  * edit player
 */
 function editPlayer(index) {
-    document.querySelector('#close').addEventListener('click',()=>{
-        form.style.display="none"
-    })
-
-    form.style.display="flex"
-    
+    const form = document.querySelector('#form');
+    const closeBtn = document.querySelector('#close');
+    const addNewBtn = document.getElementById('add_new');
+    const roleSelect = document.getElementById('role');
     const player = players[index];
-    document.getElementById('name').value = player.name;
-    document.getElementById('image').value = player.image;
-    document.getElementById('Position').value = player.Position;
-    document.getElementById('nationality').value = player.nationality;
-    document.getElementById('flag').value = player.flag;
-    document.getElementById('Club').value = player.Club;
-    document.getElementById('Logo').value = player.Logo;
-    document.getElementById('rating').value = player.rating;
-    document.getElementById('pace').value = player.pace;
-    document.getElementById('shooting').value = player.shooting;
-    document.getElementById('passing').value = player.passing;
-    document.getElementById('dribbling').value = player.dribbling;
-    document.getElementById('defending').value = player.defending;
-    document.getElementById('physical').value = player.physical;
-    document.getElementById('role').value = player.role;
 
+    // Affiche ou masque les statistiques selon le rôle
+    function toggleStatsForRole(role) {
+        if (role === 'Goalkeeper') {
+            document.getElementById('player_spe').style.display = 'none';
+            document.getElementById('Golkeaper_stat').style.display = 'grid';
+        } else {
+            document.getElementById('player_spe').style.display = 'grid';
+            document.getElementById('Golkeaper_stat').style.display = 'none';
+        }
+    }
 
-    document.getElementById('add_new').innerText = "Save Changes";
-    document.getElementById('add_new').addEventListener('click', function saveChanges() {
-        let updatedPlayer = {
-            
-            name: document.getElementById('name').value.toLowerCase().trim(),
-            role: document.getElementById('role').value.toLowerCase().trim(),
-            image: document.getElementById('image').value.toLowerCase().trim(),
+    // Fermer le formulaire
+    closeBtn.addEventListener('click', () => {
+        form.style.display = "none";
+        addNewBtn.innerText = "Add New";
+        addNewBtn.removeEventListener('click', saveChanges);
+    });
+
+    // Afficher le formulaire avec les données du joueur
+    form.style.display = "flex";
+
+    // Remplir les champs avec les données du joueur
+    document.getElementById('name').value = player.name || '';
+    document.getElementById('image').value = player.image || '';
+    document.getElementById('Position').value = player.Position || '';
+    document.getElementById('nationality').value = player.nationality || '';
+    document.getElementById('flag').value = player.flag || '';
+    document.getElementById('Club').value = player.Club || '';
+    document.getElementById('Logo').value = player.Logo || '';
+    document.getElementById('rating').value = player.rating || '';
+    document.getElementById('pace').value = player.pace || '';
+    document.getElementById('shooting').value = player.shooting || '';
+    document.getElementById('passing').value = player.passing || '';
+    document.getElementById('dribbling').value = player.dribbling || '';
+    document.getElementById('defending').value = player.defending || '';
+    document.getElementById('physical').value = player.physical || '';
+    document.getElementById('role').value = player.role || '';
+
+    // Statistiques spécifiques pour les gardiens de but
+    document.getElementById('diving').value = player.diving || '';
+    document.getElementById('handling').value = player.handling || '';
+    document.getElementById('kicking').value = player.kicking || '';
+    document.getElementById('reflexes').value = player.reflexes || '';
+    document.getElementById('speed').value = player.speed || '';
+    document.getElementById('positioning').value = player.positioning || '';
+    document.getElementById('rating_GK').value = player.rating_GK || '';
+
+    // Mettre à jour les statistiques affichées selon le rôle
+    toggleStatsForRole(player.role);
+
+    // Mettre à jour le texte du bouton
+    addNewBtn.innerText = "Save Changes";
+
+    // Fonction pour sauvegarder les modifications
+    function saveChanges() {
+        const updatedPlayer = {
+            name: document.getElementById('name').value.trim(),
+            role: document.getElementById('role').value.trim(),
+            image: document.getElementById('image').value.trim(),
             Position: document.getElementById('Position').value.trim(),
-            nationality: document.getElementById('nationality').value.toLowerCase().trim(),
-            flag: document.getElementById('flag').value.toLowerCase().trim(),
-            Club: document.getElementById('Club').value.toLowerCase().trim(),
-            Logo: document.getElementById('Logo').value.toLowerCase().trim(),
-            rating: document.getElementById('rating').value.toLowerCase().trim(),
-            pace: document.getElementById('pace').value.toLowerCase().trim(),
-            shooting: document.getElementById('shooting').value.toLowerCase().trim(),
-            passing: document.getElementById('passing').value.toLowerCase().trim(),
-            dribbling: document.getElementById('dribbling').value.toLowerCase().trim(),
-            defending: document.getElementById('defending').value.toLowerCase().trim(),
-            physical: document.getElementById('physical').value.toLowerCase().trim()
+            nationality: document.getElementById('nationality').value.trim(),
+            flag: document.getElementById('flag').value.trim(),
+            Club: document.getElementById('Club').value.trim(),
+            Logo: document.getElementById('Logo').value.trim(),
+            rating: document.getElementById('rating').value.trim(),
+            pace: document.getElementById('pace').value.trim(),
+            shooting: document.getElementById('shooting').value.trim(),
+            passing: document.getElementById('passing').value.trim(),
+            dribbling: document.getElementById('dribbling').value.trim(),
+            defending: document.getElementById('defending').value.trim(),
+            physical: document.getElementById('physical').value.trim(),
+            diving: document.getElementById('diving').value.trim(),
+            handling: document.getElementById('handling').value.trim(),
+            kicking: document.getElementById('kicking').value.trim(),
+            reflexes: document.getElementById('reflexes').value.trim(),
+            speed: document.getElementById('speed').value.trim(),
+            positioning: document.getElementById('positioning').value.trim(),
+            rating_GK: document.getElementById('rating_GK').value.trim(),
         };
 
-        players[index] = updatedPlayer; 
-        localStorage.setItem("players", JSON.stringify(players)); 
-        show_players_remplacement(); 
+        // Mettre à jour le joueur existant
+        players[index] = updatedPlayer;
+
+        // Mettre à jour le stockage local
+        localStorage.setItem("players", JSON.stringify(players));
+
+        // Rafraîchir l'interface utilisateur
+        show_players_remplacement();
         show_players_spec();
 
-        document.getElementById('add_new').innerText = "Add New";
-        document.getElementById('add_new').removeEventListener('click', saveChanges);
+        // Réinitialiser le bouton et masquer le formulaire
+        addNewBtn.innerText = "Add New";
+        form.style.display = "none";
+
+        addNewBtn.removeEventListener('click', saveChanges);
+    }
+
+    // Ajouter l'événement au bouton (avec { once: true } pour éviter les doublons)
+    addNewBtn.addEventListener('click', saveChanges, { once: true });
+
+    // Mettre à jour l'affichage des statistiques quand le rôle change
+    roleSelect.addEventListener('change', function () {
+        toggleStatsForRole(roleSelect.value);
     });
 }
+
 
 
 
