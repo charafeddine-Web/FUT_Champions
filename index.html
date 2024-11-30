@@ -70,8 +70,6 @@
             </div>
         </div>
     </nav>
-    
-
     <main
         class="flex  md:justify-between  md:items-start items-center   flex-col-reverse md:flex-row md:gap-20 md:my-40  md:mx-20 my-10 mx-2  gap-10 ">
 
@@ -285,6 +283,8 @@
                             <option value="plan-6">5-5-1</option>
                         </optgroup>
                     </select>
+                    <p class="text-white">The 4-3-3 formation consists of 4 defenders (2 center backs and 2 fullbacks), 3 midfielders (1 defensive and 2 central midfielders), and 3 forwards (1 striker and 2 wingers). 
+                    </p>
                 </div>
             </div><br>
 
@@ -515,6 +515,207 @@
             </div>
         </div>
     </div>
+<!--  ********************************************************** FORM-EDIT ******************************************************************* -->
+    <div id="edit-player-modal" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full bg-transparent h-[calc(100%-1rem)] max-h-120">
+        <div class="relative p-2 w-full max-w-md max-h-full">
+            <div class="relative bg-gray-700 rounded-lg shadow dark:bg-gray-700">
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-lg font-semibold text-gray-400">Edit contract</h3>
+                    <button id="close_edit" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="select-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <div class="p-4 md:p-5">
+                    <form id="playerForm" class="max-w-sm mx-auto overflow-y-auto overflow-x-hidden">
+                        <div class="mb-5">
+                            <label for="role_ed" class="block mb-2 text-sm font-medium text-gray-300">Role</label>
+                            <select id="role_ed" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                <option value="player">Player</option>
+                                <option value="Coach">Coach</option>
+                                <option value="Goalkeeper">Goalkeeper</option>
+                            </select>
+                        </div>
+                        <div class="mb-5">
+                            <label for="name_ed" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">Name</label>
+                            <input type="text" id="name_ed" class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Edit name" />
+                        </div>
+                        <div class="mb-5">
+                            <label for="image_ed" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">
+                                Image</label>
+                            <input type="text" placeholder="Enter image URL" id="image_ed"
+                                class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                 />
+                        </div>
+                        <div class="mb-5">
+                            <label for="Position_ed" class="block mb-2 text-sm font-medium text-gray-300 ">Position</label>
+                            <select name="Position" id="Position_ed"
+                                class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                >
+                                <option value=""></option>
+                                <option value="RW">RW</option>
+                                <option value="ST">ST</option>
+                                <option value="CM">CM</option>
+                                <option value="LM">LM</option>
+                                <option value="LCB">LCB</option>
+                                <option value="RCB">RCB</option>
+                                <option value="LW">LW</option>
+                                <option value="CDM">CDM</option>
+                                <option value="RB">RB</option>
+                                <option value="LB">LB</option>
+                                <option value="GK">GK</option>
+                                <option value="HC">HC</option>
+                            </select>
+
+                        </div>
+
+                        <div class="mb-5">
+                            <label for="nationality_ed"
+                                class="block mb-2 text-sm font-medium  text-gray-300 dark:text-white">Nationality</label>
+                            <input type="text" id="nationality_ed"
+                                class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+                                 />
+                        </div>
+
+                        <div class="mb-5">
+                            <label for="flag_ed" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">
+                                Flag</label>
+                            <input type="text" placeholder="Enter image URL" id="flag_ed"
+                                class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+                                 />
+                        </div>
+
+                        <div class="mb-5">
+                            <label for="Club_ed"
+                                class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">Club</label>
+                            <input type="text" id="Club_ed"
+                                class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+                                 />
+                        </div>
+
+                        <div class="mb-5">
+                            <label for="Logo_ed" class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">
+                                Logo</label>
+                            <input type="text" placeholder="Enter image URL" id="Logo_ed"
+                                class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+                                 />
+                        </div>
+
+                        <div id="player_spe_ed" class="grid grid-cols-2 gap-4 md:grid-cols-4 ">
+                            <div class="mb-5 w-20">
+                                <label for="rating_ed"
+                                    class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">rating</label>
+                                <input type="number" id="rating_ed"
+                                    class="shadow-sm w-20 bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+                                     />
+                            </div>
+                            <div class="mb-5">
+                                <label for="pace_ed"
+                                    class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">pace</label>
+                                <input type="number" id="pace_ed"
+                                    class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+                                     />
+                            </div>
+                            <div class="mb-5">
+                                <label for="shooting_ed"
+                                    class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">shooting</label>
+                                <input type="number" id="shooting_ed"
+                                    class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+                                     />
+                            </div>
+                            <div class="mb-5">
+                                <label for="passing_ed"
+                                    class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">passing</label>
+                                <input type="number" id="passing_ed"
+                                    class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+                                     />
+                            </div>
+                            <div class="mb-5">
+                                <label for="dribbling_ed"
+                                    class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">dribbling</label>
+                                <input type="number" id="dribbling_ed"
+                                    class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+                                     />
+                            </div>
+                            <div class="mb-5">
+                                <label for="defending_ed"
+                                    class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">defending</label>
+                                <input type="number" id="defending_ed"
+                                    class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+                                     />
+                            </div>
+                            <div class="mb-5">
+                                <label for="physical_ed"
+                                    class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">physical</label>
+                                <input type="number" id="physical_ed"
+                                    class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+                                     />
+                            </div>
+
+                        </div>
+                      
+                        <div id="Golkeaper_stat_ed" class="hidden grid grid-cols-2 gap-4 md:grid-cols-3 ">
+                            <div class="mb-5 w-20">
+                                <label for="rating_GK_ed"
+                                    class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">rating_GK</label>
+                                <input type="number" id="rating_GK_ed"
+                                    class="shadow-sm w-20 bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+                                     />
+                            </div>
+                            <div class="mb-5">
+                                <label for="diving_ed"
+                                    class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">diving</label>
+                                <input type="number" id="diving_ed"
+                                    class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+                                     />
+                            </div>
+                            <div class="mb-5">
+                                <label for="handling_ed"
+                                    class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">handling</label>
+                                <input type="number" id="handling_ed"
+                                    class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+                                     />
+                            </div>
+                            <div class="mb-5">
+                                <label for="kicking_ed"
+                                    class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">kicking</label>
+                                <input type="number" id="kicking_ed"
+                                    class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+                                     />
+                            </div>
+                            <div class="mb-5">
+                                <label for="reflexes_ed"
+                                    class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">reflexes</label>
+                                <input type="number" id="reflexes_ed"
+                                    class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+                                     />
+                            </div>
+                            <div class="mb-5">
+                                <label for="speed_ed"
+                                    class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">speed</label>
+                                <input type="number" id="speed_ed"
+                                    class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+                                     />
+                            </div>
+                            <div class="mb-5">
+                                <label for="positioning_ed"
+                                    class="block mb-2 text-sm font-medium text-gray-300 dark:text-white">positioning</label>
+                                <input type="number" id="positioning_ed"
+                                    class="shadow-sm bg-gray-600 border border-gray-300 text-gray-300 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+                                     />
+                            </div>
+                        </div>
+                        <button type="button" id="save-edited-player" class="text-white inline-flex w-full justify-center bg-red-700 hover:bg-red-800 focus:ring-1 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                            Update contract
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--*****************************************************  END Form Edit       *****************************************************-->
 
 
     <div id="select_form" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full  bg-transparent  h-[calc(100%-1rem)] max-h-120">

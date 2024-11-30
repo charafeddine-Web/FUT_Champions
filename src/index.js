@@ -47,18 +47,29 @@ document.getElementById('add_new').addEventListener('click',function(){
 
 
 
-    if (!nom || typeof nom !== "string") {
-        alert("Erreur : La  'nom' est invalide ou non définie.");
+    if (!(nom && typeof nom === "string" && nom.length >= 3 && nom.length <= 10)) {
+        alert(`Erreur : Le 'nom' est invalide:
+             -doit être une chaîne de caractères.
+             -Erreur : Le 'nom' doit avoir entre 3 et 10 caractères.
+             `);
         return;
     }
-    
+
+   // Validate the image input
+
+   const imageRegex = /\.(jpg|jpeg|png|gif|bmp)$/;
+    if (!( imageRegex.test(image) && imageRegex.test(flag) && imageRegex.test(Logo) )) {
+        alert('Please upload a valid image (jpg, jpeg, png, gif, bmp).');
+        return;
+    } 
+
    if (!nom || !image || !Position || !nationality || !flag || !Club || !Logo  ) {
     alert("Erreur : Veuillez remplir tous les champs obligatoires.");
     return;
-}
-// Validate 
+  }
 
-if ( rating < 1 || rating > 100 ||
+// Validate 
+if (rating < 1 || rating > 100 ||
     (Position === 'Goalkeeper' && (
         diving < 1 || diving > 100 ||
         handling < 1 || handling > 100 ||
@@ -66,20 +77,21 @@ if ( rating < 1 || rating > 100 ||
         reflexes < 1 || reflexes > 100 ||
         speed < 1 || speed > 100 ||
         positioning < 1 || positioning > 100
-    ))
-){
+    )) 
+) {
     alert("Erreur : Toutes les notes doivent être comprises entre 1 et 100.");
     return;
 }
-    const validPositions = ["RW", "ST", "CM", "LCB","RCB", "LW", "CDM", "RB", "LB", "GK", "HC"];
 
+
+    const validPositions = ["RW", "ST", "CM", "LCB","RCB", "LW", "CDM", "RB", "LB", "GK", "HC"];
     if (!validPositions.includes(Position)) {
         alert("Erreur : La position saisie est invalide. Veuillez choisir une position valide.");
         return;
     }
     let exists = players.some(player => 
         player.name.toLowerCase() === nom || 
-        (player.Club.toLowerCase() === Club && player.Position.toLowerCase() === Position) || 
+        player.Club.toLowerCase() === Club  || 
         player.image.toLowerCase() === image
     );
     
@@ -131,21 +143,19 @@ if (role === "Goalkeeper") {
     };
     console.log("new player", newPlayer)
 }
-
-    players.unshift(newPlayer);
-    
+    players.push(newPlayer);
     localStorage.setItem("players", JSON.stringify(players));
     show_players_remplacement();
-    
-
     document.getElementById('playerForm').reset();
+    document.getElementById('Golkeaper_stat').style.display = 'none';
     toggleStatsForRole('');
+    document.getElementById('show_form').style.display = "none";
 
 })
 
+//hide statis for Goalkeeper
 document.addEventListener('DOMContentLoaded', function () {
     const roleSelect = document.getElementById('role');
-
     /**
      * 
      * @param {role} role Function to hide statis for Goalkeeper
@@ -155,15 +165,15 @@ document.addEventListener('DOMContentLoaded', function () {
         if (role === 'Goalkeeper') {
             document.getElementById('player_spe').style.display = 'none';
             document.getElementById('Golkeaper_stat').style.display = 'grid';
-            
-
-        } else {
+        } else if (role) {
             document.getElementById('player_spe').style.display = 'grid';
             document.getElementById('Golkeaper_stat').style.display = 'none';
-
+        } else {
+            document.getElementById('player_spe').style.display = 'none';
+            document.getElementById('Golkeaper_stat').style.display = 'none';
         }
     }
-
+    
     // Listen for role change
     roleSelect.addEventListener('change', function () {
         toggleStatsForRole(roleSelect.value);
@@ -172,7 +182,20 @@ document.addEventListener('DOMContentLoaded', function () {
     toggleStatsForRole(roleSelect.value);
 });
 
-/*****************************************************************************************************************************************************************/
+// change Position en fonction de la valeur de role
+document.getElementById("role").addEventListener("change", function() {
+    const role = this.value;
+    const positionSelect = document.getElementById("Position");
+    if (role === "Goalkeeper") {
+        positionSelect.value = "GK";
+        positionSelect.disabled = true;  
+
+    } else {
+        positionSelect.value = "";
+        positionSelect.disabled = false;  
+    }
+});
+
 /**
      * show players 
 */
@@ -181,7 +204,6 @@ function show_players_remplacement() {
     parent.innerHTML = "";
     players.forEach((player, index) => {
         const isGoalkeeper = player.role.toLowerCase() === "goalkeeper";
-
         parent.innerHTML += `
         <div class="relative w-[7em] h-44 sm:w-[10em] sm:h-55 md:w-[12em] md:h-80 flex-col flex items-center justify-center rounded-lg cursor-pointer text-white transition-transform duration-300 hover:brightness-110 hover:scale-105 group">
             <div class="absolute inset-0 bg-cover bg-center rounded-lg" style="background-image: url('./src/assets/new-card.png');" aria-hidden="true">
@@ -241,14 +263,10 @@ function show_players_remplacement() {
     });
 }
 
-
-
-
 /**
  * 
  * @param {*} players open Popup afficher les joueurs
  */
-
 function openPopup(players) {
     const popup = document.getElementById("player-popup");
     const playerList = document.getElementById("player-list");
@@ -291,8 +309,11 @@ function closePopup() {
 }
 
 /**
- * function replaceDefaultCardWithPlayer
- *  */ function replaceDefaultCardWithPlayer(player) {
+ * Fonction qui remplace la carte par défaut par celle d'un joueur.
+ * 
+ * @param {*} players - Liste des joueurs à afficher.
+ */
+function replaceDefaultCardWithPlayer(player) {
     const targetCard = document.querySelector(`.default-card[data-id="${player.Position}"]`);
     const isGoalkeeper = player.role.toLowerCase() === "goalkeeper";
 
@@ -301,8 +322,6 @@ function closePopup() {
         if (!targetCard.dataset.defaultContent) {
             targetCard.dataset.defaultContent = targetCard.innerHTML;
         }
-
-        // Create the new player card content
         let cardContent = `
         <div class="card-container relative w-[5em] h-40 sm:w-[10em] sm:h-55 md:w-[90%] md:h-30 flex-col flex items-start justify-start rounded-lg cursor-pointer text-white transition-transform duration-300 hover:brightness-110 hover:scale-105">
             <div class="absolute inset-0 bg-cover bg-center rounded-lg" style="background-image: url('${isGoalkeeper ? './src/assets/goalkeeper-card.png' : './src/assets/new-card.png'}');" aria-hidden="true">
@@ -340,18 +359,14 @@ function closePopup() {
             <button class="delete-icon absolute top-0 right-0 bg-red-500 text-white px-2 rounded-full hidden hover:bg-red-600">X</button>
         </div>
         `;
-
-        // Replace the card content with the new player card
         targetCard.innerHTML = cardContent;
 
-        // Add event listener for the delete button
         const deleteButton = targetCard.querySelector(".delete-icon");
         deleteButton.addEventListener("click", () => {
             // Restore the original default card content
             targetCard.innerHTML = targetCard.dataset.defaultContent;
             console.log(`${player.name} removed and default card restored.`);
         });
-
         // Show delete button on hover
         const cardContainer = targetCard.querySelector(".card-container");
         cardContainer.addEventListener("mouseenter", () => {
@@ -365,12 +380,7 @@ function closePopup() {
     }
 }
 
-
-
-
-
 // Ajouter un gestionnaire d'événements pour chaque carte par défaut
-
 document.querySelectorAll(".default-card").forEach((card) => {
     card.addEventListener("click", (event) => {
         const playerId = card.getAttribute("data-id");
@@ -380,9 +390,6 @@ document.querySelectorAll(".default-card").forEach((card) => {
 });
 document.getElementById("close-popup").addEventListener("click", closePopup);
 
-
-
-
 const cards = document.querySelectorAll('.card');
 const select_form = document.getElementById('select_form');
 
@@ -391,134 +398,129 @@ cards.forEach((card) => {
             select_form.style.display = "flex";
     });
 });
-
 document.querySelector('#closee').addEventListener('click',()=>{
     select_form.style.display="none"
 })
 
-
-
 /**
- * edit player
+ *   Edit player (Function to open the edit modal and pre-fill the player's data)
 */
 function editPlayer(index) {
-    const form = document.querySelector('#form');
-    const closeBtn = document.querySelector('#close');
-    const addNewBtn = document.getElementById('add_new');
-    const roleSelect = document.getElementById('role');
+    document.querySelector('#edit-player-modal').classList.remove('hidden');
     const player = players[index];
 
-    // Affiche ou masque les statistiques selon le rôle
+    // Function to toggle the display of stats based on role
     function toggleStatsForRole(role) {
         if (role === 'Goalkeeper') {
-            document.getElementById('player_spe').style.display = 'none';
-            document.getElementById('Golkeaper_stat').style.display = 'grid';
+            document.getElementById('player_spe_ed').style.display = 'none';
+            document.getElementById('Golkeaper_stat_ed').style.display = 'grid';
         } else {
-            document.getElementById('player_spe').style.display = 'grid';
-            document.getElementById('Golkeaper_stat').style.display = 'none';
+            document.getElementById('player_spe_ed').style.display = 'grid';
+            document.getElementById('Golkeaper_stat_ed').style.display = 'none';
         }
     }
 
-    // Fermer le formulaire
-    closeBtn.addEventListener('click', () => {
-        form.style.display = "none";
-        addNewBtn.innerText = "Add New";
-        addNewBtn.removeEventListener('click', saveChanges);
-    });
+    document.querySelector('#name_ed').value = player.name;
+    document.querySelector('#role_ed').value = player.role;
+    document.querySelector('#Position_ed').value = player.Position;
+    document.querySelector('#image_ed').value = player.image;
+    document.querySelector('#Club_ed').value = player.Club;
+    document.querySelector('#nationality_ed').value = player.nationality;
+    document.querySelector('#flag_ed').value = player.flag;
+    document.querySelector('#Logo_ed').value = player.Logo;
+    document.getElementById('rating_ed').value = player.rating || '';
+    document.getElementById('pace_ed').value = player.pace || '';
+    document.getElementById('shooting_ed').value = player.shooting || '';
+    document.getElementById('passing_ed').value = player.passing || '';
+    document.getElementById('dribbling_ed').value = player.dribbling || '';
+    document.getElementById('defending_ed').value = player.defending || '';
+    document.getElementById('physical_ed').value = player.physical || '';
+    document.getElementById('diving_ed').value = player.diving || '';
+    document.getElementById('handling_ed').value = player.handling || '';
+    document.getElementById('kicking_ed').value = player.kicking || '';
+    document.getElementById('reflexes_ed').value = player.reflexes || '';
+    document.getElementById('speed_ed').value = player.speed || '';
+    document.getElementById('positioning_ed').value = player.positioning || '';
+    document.getElementById('rating_GK_ed').value = player.rating_GK || '';
 
-    // Afficher le formulaire avec les données du joueur
-    form.style.display = "flex";
-
-    // Remplir les champs avec les données du joueur
-    document.getElementById('name').value = player.name || '';
-    document.getElementById('image').value = player.image || '';
-    document.getElementById('Position').value = player.Position || '';
-    document.getElementById('nationality').value = player.nationality || '';
-    document.getElementById('flag').value = player.flag || '';
-    document.getElementById('Club').value = player.Club || '';
-    document.getElementById('Logo').value = player.Logo || '';
-    document.getElementById('rating').value = player.rating || '';
-    document.getElementById('pace').value = player.pace || '';
-    document.getElementById('shooting').value = player.shooting || '';
-    document.getElementById('passing').value = player.passing || '';
-    document.getElementById('dribbling').value = player.dribbling || '';
-    document.getElementById('defending').value = player.defending || '';
-    document.getElementById('physical').value = player.physical || '';
-    document.getElementById('role').value = player.role || '';
-
-    // Statistiques spécifiques pour les gardiens de but
-    document.getElementById('diving').value = player.diving || '';
-    document.getElementById('handling').value = player.handling || '';
-    document.getElementById('kicking').value = player.kicking || '';
-    document.getElementById('reflexes').value = player.reflexes || '';
-    document.getElementById('speed').value = player.speed || '';
-    document.getElementById('positioning').value = player.positioning || '';
-    document.getElementById('rating_GK').value = player.rating_GK || '';
-
-    // Mettre à jour les statistiques affichées selon le rôle
+    // Call toggle function to show/hide stats 
     toggleStatsForRole(player.role);
 
-    // Mettre à jour le texte du bouton
-    addNewBtn.innerText = "Save Changes";
+    document.querySelector('#save-edited-player').onclick = function () {
+        player.name = document.querySelector('#name_ed').value;
+        player.role = document.querySelector('#role_ed').value;
+        player.Position = document.querySelector('#Position_ed').value;
+        player.image = document.querySelector('#image_ed').value;
+        player.Club = document.querySelector('#Club_ed').value;
+        player.nationality = document.querySelector('#nationality_ed').value;
+        player.flag = document.querySelector('#flag_ed').value;
+        player.Logo = document.querySelector('#Logo_ed').value;
+        player.rating = document.getElementById('rating_ed').value;
+        player.pace = document.getElementById('pace_ed').value;
+        player.shooting = document.getElementById('shooting_ed').value;
+        player.passing = document.getElementById('passing_ed').value;
+        player.dribbling = document.getElementById('dribbling_ed').value;
+        player.defending = document.getElementById('defending_ed').value;
+        player.physical = document.getElementById('physical_ed').value;
+        player.diving = document.getElementById('diving_ed').value;
+        player.handling = document.getElementById('handling_ed').value;
+        player.kicking = document.getElementById('kicking_ed').value;
+        player.reflexes = document.getElementById('reflexes_ed').value;
+        player.speed = document.getElementById('speed_ed').value;
+        player.positioning = document.getElementById('positioning_ed').value;
+        player.rating_GK = document.getElementById('rating_GK_ed').value;
 
-    // Fonction pour sauvegarder les modifications
-    function saveChanges() {
-        const updatedPlayer = {
-            name: document.getElementById('name').value.trim(),
-            role: document.getElementById('role').value.trim(),
-            image: document.getElementById('image').value.trim(),
-            Position: document.getElementById('Position').value.trim(),
-            nationality: document.getElementById('nationality').value.trim(),
-            flag: document.getElementById('flag').value.trim(),
-            Club: document.getElementById('Club').value.trim(),
-            Logo: document.getElementById('Logo').value.trim(),
-            rating: document.getElementById('rating').value.trim(),
-            pace: document.getElementById('pace').value.trim(),
-            shooting: document.getElementById('shooting').value.trim(),
-            passing: document.getElementById('passing').value.trim(),
-            dribbling: document.getElementById('dribbling').value.trim(),
-            defending: document.getElementById('defending').value.trim(),
-            physical: document.getElementById('physical').value.trim(),
-            diving: document.getElementById('diving').value.trim(),
-            handling: document.getElementById('handling').value.trim(),
-            kicking: document.getElementById('kicking').value.trim(),
-            reflexes: document.getElementById('reflexes').value.trim(),
-            speed: document.getElementById('speed').value.trim(),
-            positioning: document.getElementById('positioning').value.trim(),
-            rating_GK: document.getElementById('rating_GK').value.trim(),
-        };
-
-        // Mettre à jour le joueur existant
-        players[index] = updatedPlayer;
-
-        // Mettre à jour le stockage local
         localStorage.setItem("players", JSON.stringify(players));
 
-        // Rafraîchir l'interface utilisateur
+        document.querySelector('#edit-player-modal').classList.add('hidden');
         show_players_remplacement();
-        show_players_spec();
+    };
+}
+// change Position en fonction de la valeur de role
+document.getElementById("role_ed").addEventListener("change", function() {
+    const role = this.value;
+    const positionSelect = document.getElementById("Position_ed");
+    if (role === "Goalkeeper") {
+        positionSelect.value = "GK";
+        positionSelect.disabled = true;  
+    } else {
+        positionSelect.value = "";  
+        positionSelect.disabled = false; 
+    }
+});
 
-        // Réinitialiser le bouton et masquer le formulaire
-        addNewBtn.innerText = "Add New";
-        form.style.display = "none";
-
-        addNewBtn.removeEventListener('click', saveChanges);
+// Manage stat visibility Stat
+document.addEventListener('DOMContentLoaded', function () {
+    const roleSelect = document.getElementById('role_ed');
+    
+    function toggleStatsForRole(role) {
+        if (role === 'Goalkeeper') {
+            document.getElementById('player_spe_ed').style.display = 'none';
+            document.getElementById('Golkeaper_stat_ed').style.display = 'grid';
+        } else {
+            document.getElementById('player_spe_ed').style.display = 'grid';
+            document.getElementById('Golkeaper_stat_ed').style.display = 'none';
+        }
     }
 
-    // Ajouter l'événement au bouton (avec { once: true } pour éviter les doublons)
-    addNewBtn.addEventListener('click', saveChanges, { once: true });
 
-    // Mettre à jour l'affichage des statistiques quand le rôle change
     roleSelect.addEventListener('change', function () {
         toggleStatsForRole(roleSelect.value);
     });
+    toggleStatsForRole(roleSelect.value); 
+});
+
+//close modal_edit
+function closeEditModal() {
+    document.querySelector('#edit-player-modal').classList.add('hidden');
 }
+document.querySelector('#close_edit').addEventListener('click', closeEditModal);
 
-
-
+/******************************************************************************************************************************************* */
 
 /**
  * Delete player
+ * 
  */
 function deletePlayer(index) {
     if (confirm("Êtes-vous sûr de vouloir supprimer ce joueur ?")) {
@@ -531,42 +533,58 @@ function deletePlayer(index) {
 
 
 
-document.addEventListener('DOMContentLoaded', function () {
-    const roleSelect = document.getElementById('role');
-    // const playerStats = document.getElementById('player-stats');
 
-    /**
-     * 
-     * @param {role} role Function to hide statis for Goalkeeper
-     */
+
+// document.addEventListener('DOMContentLoaded', function () {
+//     const roleSelect = document.getElementById('role');
+
+//     /**
+//      * 
+//      * @param {role} role Function to hide statis for Goalkeeper
+//      */
     
-    function toggleStatsForRole(role) {
-        if (role === 'Goalkeeper') {
-            document.getElementById('pace').parentElement.style.display = 'none';
-            document.getElementById('shooting').parentElement.style.display = 'none';
-            document.getElementById('passing').parentElement.style.display = 'none';
-            document.getElementById('dribbling').parentElement.style.display = 'none';
-            document.getElementById('defending').parentElement.style.display = 'none';
-            document.getElementById('physical').parentElement.style.display = 'none';
+//     function toggleStatsForRole(role) {
+//         if (role === 'Goalkeeper') {
+//             document.getElementById('pace').parentElement.style.display = 'none';
+//             document.getElementById('shooting').parentElement.style.display = 'none';
+//             document.getElementById('passing').parentElement.style.display = 'none';
+//             document.getElementById('dribbling').parentElement.style.display = 'none';
+//             document.getElementById('defending').parentElement.style.display = 'none';
+//             document.getElementById('physical').parentElement.style.display = 'none';
 
-            document.getElementById('Golkeaper_stat').style.display = 'grid';
+//             document.getElementById('Golkeaper_stat').style.display = 'grid';
             
 
-        } else {
-            document.getElementById('rating').parentElement.style.display = 'block';
-            document.getElementById('pace').parentElement.style.display = 'block';
-            document.getElementById('shooting').parentElement.style.display = 'block';
-            document.getElementById('passing').parentElement.style.display = 'block';
-            document.getElementById('dribbling').parentElement.style.display = 'block';
-            document.getElementById('defending').parentElement.style.display = 'block';
-            document.getElementById('physical').parentElement.style.display = 'block';
-        }
-    }
+//         } else {
+//             document.getElementById('rating').parentElement.style.display = 'block';
+//             document.getElementById('pace').parentElement.style.display = 'block';
+//             document.getElementById('shooting').parentElement.style.display = 'block';
+//             document.getElementById('passing').parentElement.style.display = 'block';
+//             document.getElementById('dribbling').parentElement.style.display = 'block';
+//             document.getElementById('defending').parentElement.style.display = 'block';
+//             document.getElementById('physical').parentElement.style.display = 'block';
+//         }
+//     }
 
-    // Listen for role change
-    roleSelect.addEventListener('change', function () {
-        toggleStatsForRole(roleSelect.value);
-    });
+//     roleSelect.addEventListener('change', function () {
+//         toggleStatsForRole(roleSelect.value);
+//     });
 
-    toggleStatsForRole(roleSelect.value);
-});
+//     toggleStatsForRole(roleSelect.value);
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
