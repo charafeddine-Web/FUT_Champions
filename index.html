@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="FUT Champions Web App Ultimate Team - Gagnez des matchs, gérez votre équipe, et dominez vos adversaires !">
-    <!-- <link rel="stylesheet" href="../style/index.css"> -->
+    <meta name="description" content="FUT Champions Web App Ultimate Team - Gagnez des matchs, gérez votre équipe, et dominez vos adversaires !">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>FUT Champions Web App Ultimate Team - Gérer Votre Équipe Ultime</title>
@@ -22,8 +19,7 @@
         }
     </style>
 </head>
-
-<body>
+<body style="background-image: url(./src/assets/b.jpg); background-position: center; background-repeat: no-repeat;background-size: cover; width: 100%;">
     <nav class="bg-gray-900 border-gray-200 px-4 shadow-sm fixed top-0 left-0 w-full z-50">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between md:justify-around text-white mx-auto p-4">
             <a href="./index.html" class="flex flex-col items-center rtl:space-x-reverse">
@@ -32,7 +28,7 @@
             </a>
     
             <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                <button type="button" id="show_form" class="text-white bg-red-600 hover:bg-[#2E1F27] outline-none font-medium text-sm px-6 py-2 text-center">New contract</button>
+                <button type="button" class="show_form text-white bg-red-600 hover:bg-[#2E1F27] outline-none font-medium text-sm px-6 py-2 text-center">New contract</button>
                 <button data-collapse-toggle="navbar-cta" type="button"
                     class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
                     aria-controls="navbar-cta" aria-expanded="false">
@@ -42,36 +38,23 @@
                     </svg>
                 </button>
             </div>
-    
             <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-cta">
                 <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
                     <li>
                         <a href="./index.html" class="block py-2 px-3 md:p-0 text-white bg-red-600 rounded md:bg-transparent md:text-red-600" aria-current="page">Home</a>
                     </li>
                     <li>
-                        <a href="#" class="block py-2 px-3 md:p-0 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-600">Players</a>
+                        <a href="./src/players.html" class="block py-2 px-3 md:p-0 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-600">Players</a>
                     </li>
                     <li>
-                        <select name="plan" placeholder="select one" id="plan" class="w-[95%] h-auto rounded bg-gray-800 border-1 text-white placeholder:text-xs px-2 pb-1">
-                            <option value="">Squad info</option>
-                            <optgroup label="Offensive Plan">
-                                <option value="plan-1">3-5-4</option>
-                                <option value="plan-2">4-3-3</option>
-                                <option value="plan-3">4-4-2</option>
-                            </optgroup>
-                            <optgroup label="Defensive Plan">
-                                <option value="plan-4">5-4-2</option>
-                                <option value="plan-5">4-4-3</option>
-                                <option value="plan-6">5-5-1</option>
-                            </optgroup>
-                        </select>
+                        <a href="./src/squad.html" > Squad </a> 
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <main
-        class="flex  md:justify-between  md:items-start items-center   flex-col-reverse md:flex-row md:gap-20 md:my-40  md:mx-20 my-10 mx-2  gap-10 ">
+    <main 
+        class="flex  md:justify-between  md:items-start items-center   flex-col-reverse md:flex-row md:gap-20 md:my-40  md:mx-20 my-10 mx-2  gap-10 " >
 
         <section
             class=" flex  w-full flex-col md:flex-row md:items-start items-center  h-full  rounded-lg overflow-hidden gap-4  ">
@@ -221,42 +204,13 @@
             </div>
         </div>
       
-        
-
-   <!-- <div class="card relative w-[7em] h-40 sm:w-[10em] sm:h-55 md:w-[6em] md:h-40 flex-col flex items-start justify-start rounded-lg cursor-pointer text-white transition-transform duration-300 hover:brightness-110 hover:scale-105">
-                            <div class="absolute inset-0 bg-cover bg-center rounded-lg " style="background-image: url('./assets/new-card.png');"  aria-hidden="true">
-                            <div class="flex flex-col items-center justify-center absolute inset-0 rounded-lg">
-                            <div class="flex flex-row-reverse items-center gap-6 justify-between ">
-                                <img src="./assets/bg.webp" alt=""  class="rounded-full  w-12 h-12  sm:w-20 sm:h-20 md:w-7 md:h-7">
-                                <div class="flex flex-col items-center ">
-                                    <div class="text-xs sm:text-lg font-bold">100</div>
-                                    <div class="text-xs sm:text-xr">LS</div>
-                                </div>
-                            </div>
-                                <div class="text-xs sm:text-sm font-semibold  ">charaf</div>
-
-                                <div class="flex  / gap-2 md:mb- md:gap-4 items-center justify-center">
-                                    <img src="./assets/ff.jpg" alt="${player.name}"  class="w-4 h-4 sm:w-20 sm:h-20 md:w-6 md:h-4">
-                                    <img src="./assets/image.png" alt="${player.name}"  class="w-4 h-3 sm:w-20 sm:h-20 md:w-6 md:h-4">
-                                </div>
-                                <div class="text-xs sm:text-sm flex  justify-center md:mt-1  mt-1 ml-1  ">
-                                    <span class="text-[10px] sm:text-[10px] ">PL 99</span> 
-                                    <span class="text-[10px] sm:text-[10px] ">SH 99</span>
-                                    <span class="text-[10px] sm:text-[10px]">PS 80</span>
-                                    <span class="text-[10px] sm:text-[10px] pl-2">DR 80</span>
-                                    <span class="text-[10px] sm:text-[10px]">DE 90</span>
-                                    <span class="text-[10px] sm:text-[10px]">PH 80</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-
+    
         <section
-            class="w-80 h-auto  rounded-lg    bg-gray-700 flex flex-col items-center justify-center">
-            <button id="show_form"
-                class="text-white my-4   w-40  bg-red-700 hover:bg-red-800 focus:ring-1 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
-                New contract
-            </button>
+            class="w-80 h-auto  rounded-lg mt-20 md:mt-0   bg-gray-900 flex flex-col items-center justify-center">
+            <strong 
+                class=" text-black my-4   w-40  bg-red-400 focus:ring-1 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center ">
+                Manage your team
+            </strong>
             <div class="flex flex-col  w-full p-2 ">
                 <div class="flex flex-col items-start p-2 gap-2 ">
                     <label for="Squad" class="text-xl text-white  font-semibold">Create Squad</label>
@@ -295,7 +249,7 @@
 
     <!-- md:my-20  md:mx-20 my-10 mx-2  -->
 
-    <section  class="show flex w-full md:h-auto flex-wrap h-auto p-8 flex justify-center md:mr-40 gap-8 flex-wrap  bg-gray-300  ">
+    <section  class="show flex w-full md:h-auto flex-wrap h-auto p-8 flex justify-center md:mr-40 gap-8 flex-wrap   ">
     </section>
 
 
@@ -746,12 +700,12 @@
 </div>
 
 
-    <footer class="bg-white  w-full rounded-lg shadow mt-40 ">
+    <footer class="bg-gray-900  w-full shadow mt-20 ">
         <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8 ">
             <div class="sm:flex sm:items-center sm:justify-around">
                 <a href="./index.html" class="flex flex-col  items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
                     <img src="./src/assets/logoo.png" class="h-12" alt=" Logo" />
-                    <span class="text-xs font-medium  md:text-xl">FUT Champions</span>
+                    <span class="text-xs font-medium  md:text-xl text-white">FUT Champions</span>
                 </a>
                 <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 ">
                     <li>
