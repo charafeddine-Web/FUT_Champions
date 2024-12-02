@@ -3,7 +3,9 @@ let form=document.getElementById('form');
 document.querySelector('#close').addEventListener('click',()=>{
     form.style.display="none"
 })
+
 let show_form=document.querySelectorAll('.show_form');
+
 show_form.forEach(form_s=>{
     form_s.addEventListener('click',function(){
     form.style.display="flex"
@@ -18,8 +20,8 @@ show_players_remplacement();
 // ajouter une player  dans localstorage
 document.getElementById('add_new').addEventListener('click',function(){
 
-    if (players.length >= 24) {
-        alert("Erreur : Vous ne pouvez pas ajouter plus de 24 joueurs.");
+    if (players.length >= 23) {
+        alert("Erreur : Vous ne pouvez pas ajouter plus de 23 joueurs.");
         return; 
     }
 
@@ -48,14 +50,14 @@ document.getElementById('add_new').addEventListener('click',function(){
     let rating_GK = document.getElementById('rating_GK').value.toLowerCase().trim();
 
 
-
-    
-    const nameRegex = /^[A-Za-z]+$/;
+    const nameRegex = /^[A-Za-z\s]+$/;
 
     if (!nameRegex.test(nom)) {
         alert("Erreur : Le 'nom' doit contenir uniquement des lettres.");
         return;
     }  
+
+
     
     if (nom.length < 3 || nom.length > 10) {
         alert("Erreur : Le 'nom' doit avoir entre 3 et 10 caractères.");
@@ -74,9 +76,8 @@ document.getElementById('add_new').addEventListener('click',function(){
     return;
   }
 
-// Validate 
 
-    // Validate General Player Stats (Pace, Shooting, Passing, etc.) between 1 and 100
+    // Validate General Player Stats 
     const generalStats = [rating,pace, shooting, passing, dribbling, defending, physical];
     for (let stat of generalStats) {
         if (parseInt(stat) < 1 || parseInt(stat) > 100) {
@@ -85,7 +86,7 @@ document.getElementById('add_new').addEventListener('click',function(){
         }
     }
 
-    // If Goalkeeper (GK) position, validate GK-specific stats
+    // If Goalkeeper  , validate GK-specific stats
     if (Position === "GK") {
         const gkStats = [rating_GK, diving, handling, kicking, reflexes, speed, positioning];
         for (let stat of gkStats) {
@@ -101,12 +102,13 @@ document.getElementById('add_new').addEventListener('click',function(){
         alert("Erreur : La position saisie est invalide. Veuillez choisir une position valide.");
         return;
     }
+
+    //tester si player exists déja
     let exists = players.some(player => 
         player.name.toLowerCase() === nom || 
         player.Club.toLowerCase() === Club  || 
         player.image.toLowerCase() === image
     );
-    
     if (exists) {
         alert("Erreur : Le joueur existe déjà avec le même nom, club et position, ou image.");
         return;
@@ -165,7 +167,7 @@ if (role === "Goalkeeper") {
 
 })
 
-//hide statis for Goalkeeper
+//toggleStatsForRole => hide statis for Goalkeeper
 document.addEventListener('DOMContentLoaded', function () {
     const roleSelect = document.getElementById('role');
     /**
@@ -208,9 +210,11 @@ document.getElementById("role").addEventListener("change", function() {
     }
 });
 
+
 /**
-     * show players 
-*/
+ * 
+ * @param {*} players show players Replacement 
+ */
 function show_players_remplacement() {
     const parent = document.querySelector('.show');
     parent.innerHTML = "";
@@ -281,6 +285,8 @@ function show_players_remplacement() {
  */
 function openPopup(players) {
     const popup = document.getElementById("player-popup");
+    popup.classList.remove("hidden");
+
     const playerList = document.getElementById("player-list");
 
     playerList.innerHTML = players
@@ -300,13 +306,11 @@ function openPopup(players) {
         )
         .join("");
 
-    popup.classList.remove("hidden");
 
     document.querySelectorAll("#player-list .card").forEach((card) => {
         card.addEventListener("click", (event) => {
             const playerName = card.getAttribute("data-player-id");
             const selectedPlayer = players.find((p) => p.name === playerName);
-
             replaceDefaultCardWithPlayer(selectedPlayer);
             closePopup();
         });
@@ -321,19 +325,20 @@ function closePopup() {
 }
 
 /**
- * Fonction qui remplace la carte par défaut par celle d'un joueur.
  * 
- * @param {*} players - Liste des joueurs à afficher.
+ * @param {*} players - Fonction qui remplace la carte par défaut par celle d'un joueur.
  */
 function replaceDefaultCardWithPlayer(player) {
     const targetCard = document.querySelector(`.default-card[data-id="${player.Position}"]`);
     const isGoalkeeper = player.role === "Goalkeeper";
 
     if (targetCard) {
+        
         // Save the default card content only once in a data attribute
         if (!targetCard.dataset.defaultContent) {
             targetCard.dataset.defaultContent = targetCard.innerHTML;
         }
+
         let cardContent = `
         ${isGoalkeeper ? `
         <div class="card-container relative w-[5em] h-40 sm:w-[10em] sm:h-55 md:w-[11%] md:h-30 flex-col flex items-start justify-start rounded-lg cursor-pointer text-white transition-transform duration-300 hover:brightness-110 hover:scale-105">
@@ -418,7 +423,6 @@ function replaceDefaultCardWithPlayer(player) {
         deleteButton.addEventListener("click", () => {
             // Restore the original default card content
             targetCard.innerHTML = targetCard.dataset.defaultContent;
-            console.log(`${player.name} removed and default card restored.`);
         });
         // Show delete button on hover
         const cardContainer = targetCard.querySelector(".card-container");
@@ -443,21 +447,26 @@ document.querySelectorAll(".default-card").forEach((card) => {
 });
 document.getElementById("close-popup").addEventListener("click", closePopup);
 
-const cards = document.querySelectorAll('.card');
-const select_form = document.getElementById('select_form');
 
-cards.forEach((card) => {
-    card.addEventListener('click', () => {
-            select_form.style.display = "flex";
-    });
-});
-document.querySelector('#closee').addEventListener('click',()=>{
-    select_form.style.display="none"
-})
+// const cards = document.querySelectorAll('.card');
+// const select_form = document.getElementById('select_form');
+
+// cards.forEach((card) => {
+//     card.addEventListener('click', () => {
+//             select_form.style.display = "flex";
+//     });
+// });
+// document.querySelector('#closee').addEventListener('click',()=>{
+//     select_form.style.display="none"
+// })
+
+
+
 
 /**
  *   Edit player (Function to open the edit modal and pre-fill the player's data)
 */
+
 function editPlayer(index) {
     document.querySelector('#edit-player-modal').classList.remove('hidden');
     const player = players[index];
@@ -471,7 +480,7 @@ function editPlayer(index) {
             document.getElementById('Golkeaper_stat_ed').style.display = 'none';
         }
     }
-
+    
     document.querySelector('#name_ed').value = player.name;
     document.querySelector('#role_ed').value = player.role;
     document.querySelector('#Position_ed').value = player.Position;
@@ -522,7 +531,7 @@ function editPlayer(index) {
         const positioning = document.querySelector('#positioning_ed').value.trim() || 0;
         const rating_GK = document.querySelector('#rating_GK_ed').value.toLowerCase().trim();
 
-        const nameRegex = /^[A-Za-z]+$/;
+        const nameRegex = /^[A-Za-z\s]+$/;
 
         if (!nameRegex.test(nom)) {
             alert("Erreur : Le 'nom' doit contenir uniquement des lettres.");
