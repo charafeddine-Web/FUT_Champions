@@ -660,15 +660,24 @@ document.querySelector('#close_edit').addEventListener('click', closeEditModal);
  * Delete player
  * 
  */
+
+
 function deletePlayer(index) {
     if (confirm("Êtes-vous sûr de vouloir supprimer ce joueur ?")) {
-        players.splice(index, 1); 
-        localStorage.setItem("players", JSON.stringify(players)); 
-        show_players_remplacement(); 
+        const playerToDelete = players[index]; 
+        const positionId = playerToDelete.Position;
+
+        players.splice(index, 1);
+        localStorage.setItem("players", JSON.stringify(players));
+
+        const targetCard = document.querySelector(`.default-card[data-id="${positionId}"]`);
+        if (targetCard && targetCard.dataset.defaultContent) {
+            targetCard.innerHTML = targetCard.dataset.defaultContent;
+        }
+        show_players_remplacement();
         show_players_spec();
     }
 }
-
 
 
 
