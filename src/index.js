@@ -85,7 +85,6 @@ document.getElementById('add_new').addEventListener('click',function(){
             return;
         }
     }
-
     // If Goalkeeper  , validate GK-specific stats
     if (Position === "GK") {
         const gkStats = [rating_GK, diving, handling, kicking, reflexes, speed, positioning];
@@ -211,6 +210,7 @@ document.getElementById("role").addEventListener("change", function() {
 });
 
 
+
 /**
  * 
  * @param {*} players show players Replacement 
@@ -329,6 +329,7 @@ function closePopup() {
  * @param {*} players - Fonction qui remplace la carte par défaut par celle d'un joueur.
  */
 function replaceDefaultCardWithPlayer(player) {
+
     const targetCard = document.querySelector(`.default-card[data-id="${player.Position}"]`);
     const isGoalkeeper = player.role === "Goalkeeper";
 
@@ -459,8 +460,6 @@ document.getElementById("close-popup").addEventListener("click", closePopup);
 // document.querySelector('#closee').addEventListener('click',()=>{
 //     select_form.style.display="none"
 // })
-
-
 
 
 /**
@@ -656,11 +655,11 @@ function closeEditModal() {
 document.querySelector('#close_edit').addEventListener('click', closeEditModal);
 
 
+
 /**
  * Delete player
  * 
  */
-
 
 function deletePlayer(index) {
     if (confirm("Êtes-vous sûr de vouloir supprimer ce joueur ?")) {
@@ -678,12 +677,6 @@ function deletePlayer(index) {
         show_players_spec();
     }
 }
-
-
-
-
-
-
 
 
 
